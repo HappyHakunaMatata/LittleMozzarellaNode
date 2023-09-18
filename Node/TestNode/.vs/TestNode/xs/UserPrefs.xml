@@ -1,0 +1,27 @@
+﻿<Properties StartupConfiguration="{9EBDF15D-0339-4817-985E-B3E5AEC12C95}|Default">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="TestNode/UnitTest1.cs">
+    <Files>
+      <File FileName="TestNode/UnitTest1.cs" Line="145" Column="10" />
+      <File FileName="TestNode/Usings.cs" Line="1" Column="1" />
+      <File FileName="../Node/YggDrasil/AddressTest.cs" Line="131" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="TestNode" expanded="True">
+            <Node name="TestNode" expanded="True">
+              <Node name="UnitTest1.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.TestNode PreferredExecutionTarget="MonoDevelop.Default" FirstBuild="True" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+</Properties>

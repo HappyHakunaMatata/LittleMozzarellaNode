@@ -1,0 +1,33 @@
+﻿<Properties StartupConfiguration="{D06A42BE-5517-4D51-98D5-520FCF1109B6}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Node/Program.cs">
+    <Files>
+      <File FileName="Node/Program.cs" Line="67" Column="31" />
+      <File FileName="Node/YggDrasil/cmd/YggdrasilTest.cs" />
+      <File FileName="Node/YggDrasil/YggdrasilSafeHandle.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Node" expanded="True">
+            <Node name="Node">
+              <Node name="YggDrasil" expanded="True" />
+              <Node name="Program.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <DisabledProjects>
+    <String>../../Projects/TCP_TEST/TCP_TEST/TCP_TEST.csproj</String>
+  </DisabledProjects>
+  <MonoDevelop.Ide.ItemProperties.Node PreferredExecutionTarget="MonoDevelop.Default" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.TestNode PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.ItemProperties.TestFunc PreferredExecutionTarget="MonoDevelop.Default" />
+</Properties>

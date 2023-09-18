@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 25.0.1704.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Node", "Node\Node.csproj", "{D06A42BE-5517-4D51-98D5-520FCF1109B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestNode", "TestNode\TestNode\TestNode.csproj", "{D45EC7B5-0FE5-4D69-B236-B9A352ABE174}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFunc", "TestFunc\TestFunc.csproj", "{C6AC3FBA-CBB2-40CF-A9FE-8237FE55E42F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D06A42BE-5517-4D51-98D5-520FCF1109B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D06A42BE-5517-4D51-98D5-520FCF1109B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D06A42BE-5517-4D51-98D5-520FCF1109B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D06A42BE-5517-4D51-98D5-520FCF1109B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D45EC7B5-0FE5-4D69-B236-B9A352ABE174}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D45EC7B5-0FE5-4D69-B236-B9A352ABE174}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D45EC7B5-0FE5-4D69-B236-B9A352ABE174}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D45EC7B5-0FE5-4D69-B236-B9A352ABE174}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6AC3FBA-CBB2-40CF-A9FE-8237FE55E42F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6AC3FBA-CBB2-40CF-A9FE-8237FE55E42F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6AC3FBA-CBB2-40CF-A9FE-8237FE55E42F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6AC3FBA-CBB2-40CF-A9FE-8237FE55E42F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3B799DB2-1703-4AF7-B6A6-C92A85024C30}
+	EndGlobalSection
+EndGlobal

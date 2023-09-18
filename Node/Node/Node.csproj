@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="xunit" />
+    <None Remove="ProxyClient\Main" />
+    <None Remove="BrotliSharpLib" />
+    <None Remove="ProxyClient\Helpers\NativeMethods.SystemProxy" />
+    <None Remove="BouncyCastle.Cryptography" />
+    <None Remove="ProxyClient\Helpers\NativeMethods.Tcp" />
+    <None Remove="Microsoft.Extensions.Logging" />
+    <None Remove="Microsoft.Extensions.Logging.Console" />
+    <None Remove="YggDrasil\" />
+    <None Remove="NSec.Cryptography" />
+    <None Remove="YggDrasil\CMD\yggdrasil\" />
+    <None Remove="YggDrasil\CMD\yggdrasilctl\" />
+    <None Remove="YggDrasil\CMD\genkeys\" />
+    <None Remove="Certificate\" />
+    <None Remove="Controllers\" />
+    <None Remove="Examples\" />
+    <None Remove="TunnelManagers\" />
+    <None Remove="TunnelExecutors\" />
+    <None Remove="Certificate\Models\" />
+    <None Remove="YggDrasil\models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="BrotliSharpLib" Version="0.3.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
+    <PackageReference Include="BouncyCastle.Cryptography" Version="2.2.1" />
+    <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
+    <PackageReference Include="System.Runtime" Version="4.3.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Validation" Version="17.6.11" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="YggDrasil\" />
+    <Folder Include="Certificate\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Examples\" />
+    <Folder Include="TunnelManagers\" />
+    <Folder Include="TunnelExecutors\" />
+    <Folder Include="Certificate\Models\" />
+    <Folder Include="YggDrasil\models\" />
+  </ItemGroup>
+</Project>
