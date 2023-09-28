@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Yzj92GkqSx0dAs3xvfb6KCabwWd6Sq2Iuw+rrYWAhaZ3GHCIqKFaAnwzqKR74uCiPkiB0J2eFFqhN1mEjlgYxQ==",
+  "dgSpecHash": "y6Io6mXTdoF9KYCqbCexQzJHQB8RyIaWTETlcfIMLuaBk7bYEWfBTSwBjGgfToMCMOJ9W7r+Q5WX7CpRMi+8wQ==",
   "success": true,
-  "projectFilePath": "/Users/user/Documents/GitHub/LittleMozzarellaNetwork/Node/TestFunc/TestFunc.csproj",
+  "projectFilePath": "/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/TestFunc/TestFunc.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

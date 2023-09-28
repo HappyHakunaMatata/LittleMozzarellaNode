@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/user/Documents/GitHub/LittleMozzarellaNetwork/Node/TestFunc/TestFunc.csproj",
+      "projectUniqueName": "/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/TestFunc/TestFunc.csproj",
       "projectName": "TestFunc",
-      "projectPath": "/Users/user/Documents/GitHub/LittleMozzarellaNetwork/Node/TestFunc/TestFunc.csproj",
+      "projectPath": "/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/TestFunc/TestFunc.csproj",
       "packagesPath": "/Users/user/.nuget/packages/",
-      "outputPath": "/Users/user/Documents/GitHub/LittleMozzarellaNetwork/Node/TestFunc/obj/",
+      "outputPath": "/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/TestFunc/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/user/.nuget/NuGet/NuGet.Config"

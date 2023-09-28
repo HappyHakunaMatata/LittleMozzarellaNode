@@ -10,7 +10,7 @@ namespace Node.TunnelExecutors.Models
 
         public TunnelStructure()
         {
-            key = new Guid();
+            //key = new Guid();
         }
         public Guid key;
 		public Socket remote;

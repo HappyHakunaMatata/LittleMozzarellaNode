@@ -10,7 +10,8 @@ namespace Node.TunnelManagers
     public class SocketTunnelManager : TunnelManager
     {
         protected readonly ILogger _logger;
-        public SocketTunnelManager(string? ip = null, X509Certificate2? certificate = null): base(ip:ip, certificate:certificate)
+
+        public SocketTunnelManager(X509Certificate2? certificate = null, string? ip = null) : base(ip:ip, certificate:certificate)
         {
             using var loggerFactory = LoggerFactory.Create(builder =>
             {
@@ -21,22 +22,28 @@ namespace Node.TunnelManagers
                     .AddConsole();
             });
             _logger = loggerFactory.CreateLogger<TunnelManager>();
+            cancellationTokenSource = new CancellationTokenSource();
         }
 
-        private CancellationTokenSource? cancellationTokenSource;
+        private CancellationTokenSource cancellationTokenSource;
         internal override void StartAcceptSocket()
         {
-            cancellationTokenSource = new CancellationTokenSource();
-            Task.Run(async () =>
+            Task task = Task.Run(async () =>
             {
                 await OnAcceptSocketAsync();
             },
-            cancellationTokenSource.Token);
+                cancellationTokenSource.Token);
+            task.Wait();
         }
 
         private async Task OnAcceptSocketAsync()
         {
-            while (ListeningSocket != null)
+            if (ListeningSocket == null)
+            {
+                cancellationTokenSource.Cancel();
+                return;
+            }
+            while (true)
             {
                 TunnelStructure tunnel = new TunnelStructure();
                 try
@@ -55,47 +62,39 @@ namespace Node.TunnelManagers
 
         private async Task ConnectAsync(TunnelStructure tunnel)
         {
-            string ForbiddenRequest = "HTTP/1.1 403 Forbidden\r\n\r\n";
             byte[] buffer = new byte[Settings.BufferSize];
-
-            Func<CancellationToken, Task<int?>> ConnectAsyncDelegate = async cts =>
-                await tunnel.client.ReceiveAsync(buffer: buffer, cancellationToken: cts);
-            int? response = await TunnelExecutor.Commit(method: ConnectAsyncDelegate);
-
-            if (response.Value == 0)
+            SocketTunnelExecutor executor = new(_logger);
+            int response = await executor.ReceiveAsync(tunnel.client, buffer);
+            if (response == 0)
             {
-                await TunnelExecutor.CloseSocketAsync(tunnel.client);
-                await TunnelExecutor.CloseSSLStreamAsync(tunnel.sslClientStream);
+                await executor.CloseSocketAsync(tunnel.client);
+                return;
             }
-            var result = await TryCreateTunnel(buffer, tunnelStruct: tunnel);
+            var result = await TryCreateTunnel(buffer, tunnelStruct: tunnel, executor);
             if (result == false)
             {
-                Func<CancellationToken, Task> SendAsyncDelegate = async cts =>
-                await tunnel.client.SendAsync(Encoding.UTF8.GetBytes(ForbiddenRequest), cts);
-                await TunnelExecutor.Commit(action: SendAsyncDelegate);
-                await TunnelExecutor.CloseSocketAsync(tunnel.client);
+                string ForbiddenRequest = "HTTP/1.1 403 Forbidden\r\n\r\n";
+                buffer = Encoding.UTF8.GetBytes(ForbiddenRequest);
+                await executor.SendAsync(tunnel.client, buffer, buffer.Length);
+                await executor.CloseSocketAsync(tunnel.client);
             }
         }
 
-        private async Task<bool> TryCreateTunnel(byte[] buffer, TunnelStructure tunnelStruct)
+        private async Task<bool> TryCreateTunnel(byte[] buffer, TunnelStructure tunnelStruct, SocketTunnelExecutor executor)
         {
             string EstablishedRequest = "HTTP/1.1 200 Connection Established\r\n\r\n";
             RequestStruct? request;
-            TryCheckHttpMethod(buffer, out request);
-            tunnelStruct.remote = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            if (request == null)
+            var isHttp = TryCheckHttpMethod(buffer, out request);
+            if (!isHttp || request == null)
             {
-                throw new ArgumentException("requst is null");
+                return false;
             }
+            tunnelStruct.remote = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             try
             {
-                Func<CancellationToken, Task> ConnectAsyncDelegate = async cts =>
-                    await tunnelStruct.remote.ConnectAsync(request.Value.requestLine.endPoint,
-                    cancellationToken: cts);
-                await TunnelExecutor.Commit(action: ConnectAsyncDelegate);
-                Func<CancellationToken, Task<int?>> SendAsyncDelegate = async cts => await tunnelStruct.client.SendAsync(
-                    Encoding.UTF8.GetBytes(EstablishedRequest), cts);
-                var sended = await TunnelExecutor.Commit(method: SendAsyncDelegate);
+                await executor.ConnectAsync(tunnelStruct.remote, request.Value.requestLine.endPoint);
+                buffer = Encoding.UTF8.GetBytes(EstablishedRequest);
+                var sended = await executor.SendAsync(tunnelStruct.client, buffer, buffer.Length);
                 if (sended != EstablishedRequest.Length)
                 {
                     throw new ArgumentException("The length of the received data doesn't match the length of the sent data.");
@@ -103,15 +102,15 @@ namespace Node.TunnelManagers
             }
             catch (Exception e)
             {
-                await TunnelExecutor.CloseSocketAsync(tunnelStruct.remote);
-                await TunnelExecutor.CloseSocketAsync(tunnelStruct.client);
+                await executor.CloseSocketAsync(tunnelStruct.remote);
+                await executor.CloseSocketAsync(tunnelStruct.client);
                 _logger.LogError($"TryCreateTunnel has created the exception: {e.Message}");
             }
-            TunnelExecutor tunnel = new TunnelExecutor(tunnelStruct, _logger, certificate: ServerCertificate);
-            tunnelings.Add(tunnelStruct.key, tunnel);
+            executor.SetSockets(tunnelStruct);
+            //tunnelings.Add(tunnelStruct.key, tunnel);
             try
             {
-                tunnel.StartTunneling();
+                executor.StartTunneling();
             }
             catch (Exception e)
             {

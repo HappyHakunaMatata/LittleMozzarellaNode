@@ -44,7 +44,6 @@ namespace Node.Certificate
         {
             AddToStoreCertificate(storeName: StoreName.My, storeLocation: StoreLocation.CurrentUser);
             var pfxFileName = Path.GetTempFileName();
-            Console.WriteLine(pfxFileName);
             File.WriteAllBytes(pfxFileName, RootCertificate.Export(X509ContentType.Cert));
             var command = $"sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain \"{pfxFileName}\"";
             var info = new ProcessStartInfo

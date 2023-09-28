@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/user/Documents/GitHub/LittleMozzarellaNetwork/Node/TestNode/TestNode/TestNode.csproj": {}
+    "/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/TestNode/TestNode/TestNode.csproj": {}
   },
   "projects": {
-    "/Users/user/Documents/GitHub/LittleMozzarellaNetwork/Node/Node/Node.csproj": {
+    "/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/Node/Node.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/user/Documents/GitHub/LittleMozzarellaNetwork/Node/Node/Node.csproj",
+        "projectUniqueName": "/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/Node/Node.csproj",
         "projectName": "Node",
-        "projectPath": "/Users/user/Documents/GitHub/LittleMozzarellaNetwork/Node/Node/Node.csproj",
+        "projectPath": "/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/Node/Node.csproj",
         "packagesPath": "/Users/user/.nuget/packages/",
-        "outputPath": "/Users/user/Documents/GitHub/LittleMozzarellaNetwork/Node/Node/obj/",
+        "outputPath": "/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/Node/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/user/.nuget/NuGet/NuGet.Config"
@@ -95,14 +95,14 @@
         }
       }
     },
-    "/Users/user/Documents/GitHub/LittleMozzarellaNetwork/Node/TestNode/TestNode/TestNode.csproj": {
+    "/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/TestNode/TestNode/TestNode.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/user/Documents/GitHub/LittleMozzarellaNetwork/Node/TestNode/TestNode/TestNode.csproj",
+        "projectUniqueName": "/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/TestNode/TestNode/TestNode.csproj",
         "projectName": "TestNode",
-        "projectPath": "/Users/user/Documents/GitHub/LittleMozzarellaNetwork/Node/TestNode/TestNode/TestNode.csproj",
+        "projectPath": "/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/TestNode/TestNode/TestNode.csproj",
         "packagesPath": "/Users/user/.nuget/packages/",
-        "outputPath": "/Users/user/Documents/GitHub/LittleMozzarellaNetwork/Node/TestNode/TestNode/obj/",
+        "outputPath": "/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/TestNode/TestNode/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/user/.nuget/NuGet/NuGet.Config"
@@ -117,8 +117,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "/Users/user/Documents/GitHub/LittleMozzarellaNetwork/Node/Node/Node.csproj": {
-                "projectPath": "/Users/user/Documents/GitHub/LittleMozzarellaNetwork/Node/Node/Node.csproj"
+              "/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/Node/Node.csproj": {
+                "projectPath": "/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/Node/Node.csproj"
               }
             }
           }

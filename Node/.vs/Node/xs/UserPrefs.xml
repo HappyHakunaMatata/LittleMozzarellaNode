@@ -1,33 +1,42 @@
 ﻿<Properties StartupConfiguration="{D06A42BE-5517-4D51-98D5-520FCF1109B6}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Node/Program.cs">
+  <MonoDevelop.Ide.ItemProperties.docker-compose PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.TestNode PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.ItemProperties.TestFunc PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.ItemProperties.Node PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Node/TunnelExecutors/SocketTunnelExecutor.cs">
     <Files>
-      <File FileName="Node/Program.cs" Line="67" Column="31" />
-      <File FileName="Node/YggDrasil/cmd/YggdrasilTest.cs" />
-      <File FileName="Node/YggDrasil/YggdrasilSafeHandle.cs" Line="1" Column="1" />
+      <File FileName="Node/Program.cs" />
+      <File FileName="Node/TunnelManagers/TunnelManager.cs" Line="156" Column="20" />
+      <File FileName="Node/TunnelManagers/SocketTunnelManager.cs" Line="90" Column="14" />
+      <File FileName="Node/TunnelExecutors/Models/TunnelStructure.cs" Line="1" Column="1" />
+      <File FileName="Node/TunnelExecutors/TunnelExecutor.cs" Line="89" Column="10" />
+      <File FileName="Node/TunnelExecutors/SocketTunnelExecutor.cs" Line="143" Column="10" />
+      <File FileName="Node/TunnelExecutors/SSLTunnelExecutor.cs" Line="188" Column="46" />
+      <File FileName="Node/TunnelManagers/SSLStreamTunnelManager.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Node" expanded="True">
-            <Node name="Node">
-              <Node name="YggDrasil" expanded="True" />
-              <Node name="Program.cs" selected="True" />
+            <Node name="Node" expanded="True">
+              <Node name="TunnelExecutors" expanded="True">
+                <Node name="Models" expanded="True" />
+                <Node name="SocketTunnelExecutor.cs" selected="True" />
+              </Node>
+              <Node name="TunnelManagers" expanded="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
   <DisabledProjects>
     <String>../../Projects/TCP_TEST/TCP_TEST/TCP_TEST.csproj</String>
   </DisabledProjects>
-  <MonoDevelop.Ide.ItemProperties.Node PreferredExecutionTarget="MonoDevelop.Default" />
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.TestNode PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.ItemProperties.TestFunc PreferredExecutionTarget="MonoDevelop.Default" />
 </Properties>

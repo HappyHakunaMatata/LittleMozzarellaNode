@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  node:
+    image: ${DOCKER_REGISTRY-}node
+    build:
+      context: .
+      dockerfile: Node/Dockerfile

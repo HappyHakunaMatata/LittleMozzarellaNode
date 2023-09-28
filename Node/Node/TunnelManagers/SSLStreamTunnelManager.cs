@@ -62,12 +62,11 @@ namespace Node.TunnelManagers
                         ClientCertificateRequired = false,
 
                     };
-                    Func<CancellationToken, Task> AuthenticateAsServerAsyncDelegate = async cts =>
-                        await sslStream.AuthenticateAsServerAsync(options, cancellationToken: cts);
-                    await TunnelExecutor.Commit(action: AuthenticateAsServerAsyncDelegate);
+                    SSLTunnelExecutor executor = new(_logger);
+                    await executor.AuthenticateAsServerAsync(sslStream, options);
                     tunnel.client = accept;
                     tunnel.sslClientStream = sslStream;
-                    await ConnectAsync(tunnel);
+                    await ConnectAsync(tunnel, executor);
                     //ScanForExpiredTunneling();
                 }
                 catch (Exception e)
@@ -78,32 +77,27 @@ namespace Node.TunnelManagers
             }
         }
 
-        private async Task ConnectAsync(TunnelStructure tunnel)
+        private async Task ConnectAsync(TunnelStructure tunnel, SSLTunnelExecutor executor)
         {
             string ForbiddenRequest = "HTTP/1.1 403 Forbidden\r\n\r\n";
             byte[] buffer = new byte[Settings.BufferSize];
 
-            Func<CancellationToken, Task<int?>> ConnectAsyncDelegate = async cts =>
-                await tunnel.sslClientStream.ReadAsync(buffer: buffer, cancellationToken: cts);
-            int? response = await TunnelExecutor.Commit(method: ConnectAsyncDelegate);
-            
+          
+            int? response = await executor.ReceiveAsync(tunnel.sslClientStream, buffer);
             if (response.Value == 0)
             {
-                await TunnelExecutor.CloseSocketAsync(tunnel.client);
-                await TunnelExecutor.CloseSSLStreamAsync(tunnel.sslClientStream);
+                await executor.CloseSSLStreamAsync(tunnel.sslClientStream);
             }
-            var result = await TryCreateTunnel(buffer, tunnelStruct: tunnel);
+            var result = await TryCreateTunnel(buffer, tunnelStruct: tunnel, executor);
             if (result == false)
             {
-                Func<CancellationToken, Task> SendAsyncDelegate = async cts =>
-                await tunnel.client.SendAsync(Encoding.UTF8.GetBytes(ForbiddenRequest), cts);
-                await TunnelExecutor.Commit(action: SendAsyncDelegate);
-                await TunnelExecutor.CloseSocketAsync(tunnel.client);
-                //await Tunneling.CloseSSLStreamAsync(tunnel.sslClientStream);
+                buffer = Encoding.UTF8.GetBytes(ForbiddenRequest);
+                await executor.SendAsync(tunnel.sslClientStream, buffer, buffer.Length);
+                await executor.CloseSSLStreamAsync(tunnel.sslClientStream);
             }
         }
 
-        public async Task<bool> TryCreateTunnel(byte[] buffer, TunnelStructure tunnelStruct)
+        public async Task<bool> TryCreateTunnel(byte[] buffer, TunnelStructure tunnelStruct, SSLTunnelExecutor executor)
         {
             string EstablishedRequest = "HTTP/1.1 200 Connection Established\r\n\r\n";
             RequestStruct? request;
@@ -129,40 +123,29 @@ namespace Node.TunnelManagers
             };
             try
             {
-                Func<CancellationToken, Task> ConnectAsyncDelegate = async cts =>
-                    await tunnelStruct.remote.ConnectAsync(request.Value.requestLine.endPoint,
-                    cancellationToken: cts);
-                await TunnelExecutor.Commit(action: ConnectAsyncDelegate);
-
+                await executor.ConnectAsync(tunnelStruct.remote, request.Value.requestLine.endPoint);
                 SslStream sslRemoteStream = new SslStream(new NetworkStream(tunnelStruct.remote), false);
-                Func<CancellationToken, Task> AuthenticateAsClientAsyncDelegate = async cts =>
-                    await sslRemoteStream.AuthenticateAsClientAsync(options, cancellationToken: cts);
-                await TunnelExecutor.Commit(action: AuthenticateAsClientAsyncDelegate);
+                await executor.AuthenticateAsClientAsync(sslRemoteStream, options);
                 tunnelStruct.sslRemoteStream = sslRemoteStream;
 
-                Func<CancellationToken, Task> SendAsyncDelegate = async cts => await tunnelStruct.sslClientStream.WriteAsync(
-                    Encoding.UTF8.GetBytes(EstablishedRequest), cts);
-                var sended = await TunnelExecutor.Commit(action: SendAsyncDelegate);
+                buffer = Encoding.UTF8.GetBytes(EstablishedRequest);
+                await executor.SendAsync(tunnelStruct.sslClientStream, buffer, buffer.Length);
                 //tunnelStruct.sslRemoteStream.CopyToAsync();
-                if (sended != EstablishedRequest.Length)
-                {
-                    throw new ArgumentException("The length of the received data doesn't match the length of the sent data.");
-                }
             }
             catch (Exception e)
             {
-                await TunnelExecutor.CloseSocketAsync(tunnelStruct.remote);
-                await TunnelExecutor.CloseSocketAsync(tunnelStruct.client);
+                await executor.CloseSSLStreamAsync(tunnelStruct.sslClientStream);
+                await executor.CloseSSLStreamAsync(tunnelStruct.sslRemoteStream);
                 //await Tunneling.CloseSSLStreamAsync(sock.sslRemoteStream);
                 //await Tunneling.CloseSSLStreamAsync(sock.sslClientStream);
                 _logger.LogError($"TryCreateTunnel has created the exception: {e.Message}");
                 throw;
             }
-            TunnelExecutor tunnel = new TunnelExecutor(tunnelStruct, _logger, certificate: ServerCertificate);
-            tunnelings.Add(tunnelStruct.key, tunnel);
+            executor.SetSockets(tunnelStruct);
+            //tunnelings.Add(tunnelStruct.key, tunnel);
             try
             {
-                tunnel.StartTunneling();
+                executor.StartTunneling();
             }
             catch (Exception e)
             {

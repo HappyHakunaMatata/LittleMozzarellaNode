@@ -29,9 +29,8 @@ namespace Node.TunnelManagers
 
 
 
-        public TunnelManager(string? ip = null, X509Certificate2? certificate = null)
+        public TunnelManager(X509Certificate2? certificate = null, string? ip = null)
         {
-            ArgumentNullException.ThrowIfNull(certificate);
             using var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder
@@ -74,7 +73,7 @@ namespace Node.TunnelManagers
                         Where(m => m.OperationalStatus == OperationalStatus.Up).
                         Select(m => m.GetIPProperties()).
                         SelectMany(m => m.UnicastAddresses.
-                        Where(m => m.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6).
+                        Where(m => m.Address.AddressFamily == AddressFamily.InterNetworkV6).
                         Select(m => m.Address).Where(m => m.GetAddressBytes()[0] == 2)).FirstOrDefault();
                         this.ListeningAddress = result;
                         break;
@@ -120,7 +119,7 @@ namespace Node.TunnelManagers
         }
 
 
-        public void OpenSocketAsync(AddressFamily addressFamily = AddressFamily.InterNetwork, //InterNetworkV6
+        public void OpenSocketAsync(AddressFamily addressFamily = AddressFamily.InterNetwork, //AddressFamily.InterNetworkV6
             SocketType socketType = SocketType.Stream, ProtocolType protocolType = ProtocolType.Tcp)
         {
             ArgumentNullException.ThrowIfNull(ListeningAddress);
@@ -158,7 +157,8 @@ namespace Node.TunnelManagers
             }
             catch
             {
-                throw;
+                requestStruct = null;
+                return false;
             }
         }
 
@@ -270,7 +270,7 @@ namespace Node.TunnelManagers
             }
             if (ListeningSocket != null)
             {
-                Task.Run(async () => await TunnelExecutor.CloseSocketAsync(ListeningSocket));
+                //Task.Run(async () => await TunnelExecutor.CloseSocketAsync(ListeningSocket));
             }
         }
 

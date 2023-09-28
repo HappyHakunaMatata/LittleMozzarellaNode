@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "yyf22Tv/Vp56tQwtMegGRtP+tlHu9luv27JvYfYCxM9rsZAQS50zBEtBqAYrEKfLIcXBlp93MjGkZTaAIF6ylg==",
+  "dgSpecHash": "vQM+A8tZowC+8oBRfhybPF8n5SGQ+SKL3A44WJZKyZsX7pFilKsKO14c1Yj1Jw8X66hPzT8VLkUbB7wDtP4OeQ==",
   "success": true,
-  "projectFilePath": "/Users/user/Documents/GitHub/LittleMozzarellaNetwork/Node/TestNode/TestNode/TestNode.csproj",
+  "projectFilePath": "/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/TestNode/TestNode/TestNode.csproj",
   "expectedPackageFiles": [
     "/Users/user/.nuget/packages/bouncycastle.cryptography/2.2.1/bouncycastle.cryptography.2.2.1.nupkg.sha512",
     "/Users/user/.nuget/packages/brotlisharplib/0.3.3/brotlisharplib.0.3.3.nupkg.sha512",

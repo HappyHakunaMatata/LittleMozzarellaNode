@@ -6,13 +6,16 @@ using Node.Certificate.Models;
 using System.Runtime.InteropServices;
 using Node.YggDrasil.cmd;
 using Node.YggDrasil.models;
+using System.Threading.Tasks;
+using System.Runtime.ConstrainedExecution;
+using Org.BouncyCastle.Utilities.Net;
 
 namespace Node
 {
     class Program
     {
         
-        static async Task Main()
+        static void Main()
         {
             CertificateManager? certificateManager = null;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
@@ -23,71 +26,54 @@ namespace Node
             {
                 certificateManager = new WinCertificateManager();
             }
-
             if (certificateManager == null)
             {
-                //TODO exit
+                return;
             }
 
 
             using YggdrasilTest client = new YggdrasilTest();
-            
+            string address = "";
             client.Useconffile();
             var task = Task.Run(async () => await client.RunYggdrasilAsync());
-
-
-            CertificateSettings certificateSettings = new();
-            certificateSettings.Host = "201:a571:979b:7ece:d673:6ecd:7230:fc78";
-
-
-            certificateManager.RootCertificate = certificateManager.GenerateCertificate(certificateSettings);
-            
-            X509Certificate2Collection collection = certificateManager.FindCertificates("CN=201:a571:979b:7ece:d673:6ecd:7230:fc78");
-            if (collection.Count == 0)
+            var ip = client.GetIPAddress();
+            if (ip.Item1 == 0)
             {
-                certificateManager.RootCertificate = certificateManager.GenerateCertificate(certificateSettings);
-                certificateManager.TrustRootCertificateAsAdmin();
+                address = ip.Item2;
+            }
+
+           
+            X509Certificate2Collection collection = certificateManager.FindCertificates($"CN={address}");
+            var value = collection.FirstOrDefault();
+            if (value != null)
+            {
+                certificateManager.RootCertificate = value;
             }
             else
             {
-                certificateManager.RootCertificate = collection.FirstOrDefault();
+                CertificateSettings certificateSettings = new();
+                certificateSettings.Host = address;
+                certificateManager.RootCertificate = certificateManager.GenerateCertificate(certificateSettings);
+                certificateManager.TrustRootCertificateAsAdmin();
             }
-
             if (task.IsCompleted)
             {
                 Console.WriteLine($"Yggdrasil error: {task.Result.Item1}\n Yggdrasil message: {task.Result.Item2}");
             }
-            int i = 1;
-            while (true)
+
+
+            /*catch
             {
-                if (int.TryParse(Console.ReadLine(), out i))
-                {
-                    if (i == 0)
-                    {
-                        break;
-                    }
-                }
-            }
+                //Environment.Exit(1);
+            }*/
 
 
 
-
-
-
-            //QuicStreamTunnelManager proxyServer = new(certificate: cert, ip: "201:a571:979b:7ece:d673:6ecd:7230:fc78"); //"201:a571:979b:7ece:d673:6ecd:7230:fc78"
-            //proxyServer.ListeningAddress = IPAddress.Parse("172.20.10.7");
-            //proxyServer.OpenSocketAsync();
-
+            SocketTunnelManager tunnel = new(certificate: value, ip: "172.20.10.7"); //address
+            tunnel.ListeningAddress = System.Net.IPAddress.Parse("172.20.10.7");
+            tunnel.OpenSocketAsync();
             //MainYggdrasil.Exit();
         }
-
-        
-
-        /*controller.StartProxy();
-
-        Console.Read();
-
-        controller.Stop();*/
 
     }
 }

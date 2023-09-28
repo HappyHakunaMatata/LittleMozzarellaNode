@@ -1,0 +1,52 @@
+name: dockercompose10802459448146453225
+services:
+  node:
+    build:
+      context: /Users/user/Documents/GitHub/LittleMozzarellaNode/Node
+      dockerfile: Node/Dockerfile
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: Node
+      target: base
+    container_name: Node
+    entrypoint:
+    - tail
+    - -f
+    - /dev/null
+    environment:
+      NUGET_FALLBACK_PACKAGES: ""
+    image: node:dev
+    labels:
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages  "/app/bin/Debug/net7.0/Node.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
+        dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    networks:
+      default: null
+    tty: true
+    volumes:
+    - type: bind
+      source: /Users/user/Documents/GitHub/LittleMozzarellaNode/Node/Node
+      target: /app
+      bind:
+        create_host_path: true
+    - type: bind
+      source: /Users/user/Documents/GitHub/LittleMozzarellaNode/Node
+      target: /src
+      bind:
+        create_host_path: true
+    - type: bind
+      source: /Users/user/vsdbg/vs2017u5
+      target: /remote_debugger
+      bind:
+        create_host_path: true
+    - type: bind
+      source: /Users/user/.nuget/packages/
+      target: /root/.nuget/packages
+      read_only: true
+      bind:
+        create_host_path: true
+networks:
+  default:
+    name: dockercompose10802459448146453225_default

@@ -1,0 +1,12 @@
+name: dockercompose10802459448146453225
+services:
+  node:
+    build:
+      context: /Users/user/Documents/GitHub/LittleMozzarellaNode/Node
+      dockerfile: Node/Dockerfile
+    image: node
+    networks:
+      default: null
+networks:
+  default:
+    name: dockercompose10802459448146453225_default
