@@ -12,9 +12,11 @@ namespace Node.Examples
     {
         public void StartSSLClientExample()
         {
-            string serverAddress = "www.bbc.com";
-            int serverPort = 443;
+            string serverAddress = "127.0.0.1";
+            string web = "www.bbc.com";
+            int serverPort = 8080;
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            Console.WriteLine("Connecting");
             socket.Connect(serverAddress, serverPort);
             NetworkStream networkStream = new NetworkStream(socket);
             SslStream sslStream = new SslStream(networkStream, false, ValidateServerCertificate);
@@ -23,8 +25,8 @@ namespace Node.Examples
             {
                 sslStream.AuthenticateAsClient(serverAddress);
                 Console.WriteLine("Authenticated");
-                string request = $"GET / HTTP/1.1\r\nHost: {serverAddress}:{serverPort}\r\n\r\n";
-                //string request = $"CONNECT {serverAddress}:{serverPort} HTTP / 1.1\r\nHost: {serverAddress}:{serverPort}\r\n\r\n";
+                //string request = $"GET / HTTP/1.1\r\nHost: {serverAddress}:{serverPort}\r\n\r\n";
+                string request = $"CONNECT {web}:{443} HTTP / 1.1\r\nHost: {web}:{443}\r\n\r\n";
                 byte[] requestBytes = Encoding.UTF8.GetBytes(request);
                 sslStream.Write(requestBytes);
                 Console.WriteLine("Sent");
@@ -116,7 +118,7 @@ namespace Node.Examples
                     try
                     {
                         Console.WriteLine("Connecting...");
-                        await client.ConnectAsync(System.Net.IPAddress.Parse("172.20.10.7"), 8080);
+                        await client.ConnectAsync(System.Net.IPAddress.Parse("127.0.0.1"), 8080);
                         await client.SendAsync(Encoding.UTF8.GetBytes("CONNECT www.example.com:443 HTTP/1.1\r\n\r\n"));
                     }
 

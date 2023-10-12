@@ -3,6 +3,7 @@ using System.Net.Sockets;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Node.TunnelExecutors;
 using Node.TunnelExecutors.Models;
@@ -27,20 +28,26 @@ namespace Node.TunnelManagers
             _logger = loggerFactory.CreateLogger<TunnelManager>();
         }
 
-        private CancellationTokenSource? cancellationTokenSource;
+        private CancellationTokenSource cancellationTokenSource;
         internal override void StartAcceptSocket()
         {
             cancellationTokenSource = new CancellationTokenSource();
-            Task.Run(async () =>
+            Task task = Task.Run(async () =>
             {
                 await OnAcceptSocketAsync();
             },
             cancellationTokenSource.Token);
+            task.Wait();
         }
 
         private async Task OnAcceptSocketAsync()
         {
-            while (ListeningSocket != null)
+            if (ListeningSocket == null)
+            {
+                cancellationTokenSource.Cancel();
+                return;
+            }
+            while (true)
             {
                 TunnelStructure tunnel = new TunnelStructure();
                 try
@@ -48,7 +55,7 @@ namespace Node.TunnelManagers
                     var accept = await ListeningSocket.AcceptAsync();
                     SslStream sslStream = new SslStream(
                         innerStream: new NetworkStream(accept),
-                    leaveInnerStreamOpen: false);
+                        leaveInnerStreamOpen: false);
 
                     SslServerAuthenticationOptions options = new SslServerAuthenticationOptions()
                     {

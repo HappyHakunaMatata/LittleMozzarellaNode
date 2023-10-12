@@ -30,7 +30,7 @@ namespace Test
 
             Console.WriteLine($"Result: {result}, {newResult}");*/
 
-            TestLib.TestLibrary();
+            //TestLib.TestLibrary();
             Console.ReadLine();
         }
     }

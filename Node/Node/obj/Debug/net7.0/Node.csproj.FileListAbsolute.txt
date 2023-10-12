@@ -198,7 +198,6 @@
 /Users/user/Documents/GitHub/LittleMozzarellaNode/Node/Node/bin/Debug/net7.0/tr/Microsoft.VisualStudio.Validation.resources.dll
 /Users/user/Documents/GitHub/LittleMozzarellaNode/Node/Node/bin/Debug/net7.0/zh-Hans/Microsoft.VisualStudio.Validation.resources.dll
 /Users/user/Documents/GitHub/LittleMozzarellaNode/Node/Node/bin/Debug/net7.0/zh-Hant/Microsoft.VisualStudio.Validation.resources.dll
-/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/Node/bin/Debug/net7.0/runtimes/win/lib/netcoreapp2.1/System.Security.Cryptography.Pkcs.dll
 /Users/user/Documents/GitHub/LittleMozzarellaNode/Node/Node/obj/Debug/net7.0/Node.csproj.AssemblyReference.cache
 /Users/user/Documents/GitHub/LittleMozzarellaNode/Node/Node/obj/Debug/net7.0/Node.GeneratedMSBuildEditorConfig.editorconfig
 /Users/user/Documents/GitHub/LittleMozzarellaNode/Node/Node/obj/Debug/net7.0/Node.AssemblyInfoInputs.cache
@@ -210,3 +209,5 @@
 /Users/user/Documents/GitHub/LittleMozzarellaNode/Node/Node/obj/Debug/net7.0/Node.pdb
 /Users/user/Documents/GitHub/LittleMozzarellaNode/Node/Node/obj/Debug/net7.0/Node.genruntimeconfig.cache
 /Users/user/Documents/GitHub/LittleMozzarellaNode/Node/Node/obj/Debug/net7.0/ref/Node.dll
+/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/Node/bin/Debug/net7.0/runtimes/win/lib/net7.0/System.Security.Cryptography.Pkcs.dll
+/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/Node/bin/Debug/net7.0/AWSSDK.Core.dll

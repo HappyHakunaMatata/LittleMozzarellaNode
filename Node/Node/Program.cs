@@ -9,52 +9,79 @@ using Node.YggDrasil.models;
 using System.Threading.Tasks;
 using System.Runtime.ConstrainedExecution;
 using Org.BouncyCastle.Utilities.Net;
+using Node.Examples;
+using Org.BouncyCastle.Tls;
+using System.Security.Cryptography;
 
 namespace Node
 {
     class Program
     {
-        
         static void Main()
         {
-            CertificateManager? certificateManager = null;
+            string address = "0.0.0.0";
+            string name = "0.0.0.0";
+            CertificateSettings certificateSettings = new();
+            certificateSettings.Host = address;
+            certificateSettings.RootCertificateName = name;
+            certificateSettings.IssuerName = name;
+            var certificateDirector = new OSXCertificateDirector();
+            ConcreteBouncyCastleCertificateBuilder builder = new(certificateSettings);
+            certificateDirector.GenerateCertificate(builder);
+            certificateDirector.RootCertificate = builder.GetResult();
+            
+            var t = certificateDirector.TrustRootCertificateAsAdmin();
+            Console.WriteLine(t);
+        }
+        static void Main2()
+        {
+            string address = "127.0.0.1";
+            string name = "127.0.0.1";
+            CertificateSettings certificateSettings = new();
+            certificateSettings.Host = address;
+            certificateSettings.RootCertificateName = name;
+            certificateSettings.IssuerName = name;
+
+
+            CertificateDirector? certificateDirector = null;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                certificateManager = new OSXCertificateManager();
+                certificateDirector = new OSXCertificateDirector();
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                certificateManager = new WinCertificateManager();
+                certificateDirector = new WinCertificateDirector(certificateSettings);
             }
-            if (certificateManager == null)
+            if (certificateDirector == null)
             {
                 return;
             }
 
 
             using YggdrasilTest client = new YggdrasilTest();
-            string address = "";
             client.Useconffile();
             var task = Task.Run(async () => await client.RunYggdrasilAsync());
-            var ip = client.GetIPAddress();
+            /*var ip = client.GetIPAddress();
             if (ip.Item1 == 0)
             {
                 address = ip.Item2;
-            }
+            }*/
 
            
-            X509Certificate2Collection collection = certificateManager.FindCertificates($"CN={address}");
+            X509Certificate2Collection collection = certificateDirector.FindCertificates($"CN={name}");
             var value = collection.FirstOrDefault();
             if (value != null)
             {
-                certificateManager.RootCertificate = value;
+                certificateDirector.RootCertificate = value;
             }
             else
             {
-                CertificateSettings certificateSettings = new();
-                certificateSettings.Host = address;
-                certificateManager.RootCertificate = certificateManager.GenerateCertificate(certificateSettings);
-                certificateManager.TrustRootCertificateAsAdmin();
+                ConcreteBouncyCastleCertificateBuilder builder = new(certificateSettings);
+                certificateDirector.GenerateCertificate(builder);
+                certificateDirector.RootCertificate = builder.GetResult();
+                certificateDirector.TrustRootCertificateAsAdmin();
+                collection = certificateDirector.FindCertificates($"CN={name}");
+                value = collection.FirstOrDefault();
             }
             if (task.IsCompleted)
             {
@@ -69,9 +96,12 @@ namespace Node
 
 
 
-            SocketTunnelManager tunnel = new(certificate: value, ip: "172.20.10.7"); //address
-            tunnel.ListeningAddress = System.Net.IPAddress.Parse("172.20.10.7");
-            tunnel.OpenSocketAsync();
+            SSLStreamTunnelManager tunnel = new(certificate: value, ip: "127.0.0.1"); //address 172.20.10.7
+            tunnel.ListeningAddress = System.Net.IPAddress.Parse("127.0.0.1");
+
+            Task.Run(() => tunnel.OpenSocketAsync());
+            Example example = new();
+            example.StartSSLClientExample();
             //MainYggdrasil.Exit();
         }
 
