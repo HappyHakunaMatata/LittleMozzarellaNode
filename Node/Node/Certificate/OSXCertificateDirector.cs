@@ -62,12 +62,15 @@ namespace Node.Certificate
                     return false;
                 }
                 process.WaitForExit();
-                File.Delete(pfxFileName);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-            }            
+            }
+            finally
+            {
+                File.Delete(pfxFileName);
+            }
             return true;
         }
     }

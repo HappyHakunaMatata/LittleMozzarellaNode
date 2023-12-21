@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFunc", "TestFunc\TestFu
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{7C320C7E-5443-4D2C-82C8-0C026F508DDD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gRPCCertificateSign", "..\gRPCCertificateSign\gRPCCertificateSign.csproj", "{1B525D0D-E51F-4ABD-9992-1B2F70DCF4D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{7C320C7E-5443-4D2C-82C8-0C026F508DDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C320C7E-5443-4D2C-82C8-0C026F508DDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C320C7E-5443-4D2C-82C8-0C026F508DDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B525D0D-E51F-4ABD-9992-1B2F70DCF4D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B525D0D-E51F-4ABD-9992-1B2F70DCF4D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B525D0D-E51F-4ABD-9992-1B2F70DCF4D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B525D0D-E51F-4ABD-9992-1B2F70DCF4D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

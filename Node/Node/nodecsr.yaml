@@ -1,0 +1,11 @@
+﻿apiVersion: certificates.k8s.io/v1
+kind: CertificateSigningRequest
+metadata:
+  name: $name
+spec:
+  request: $base_64
+  signerName: beta.eks.amazonaws.com/app-serving
+  usages:
+    - digital signature
+    - key encipherment
+    - server auth

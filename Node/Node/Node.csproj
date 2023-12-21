@@ -9,6 +9,10 @@
     <DockerComposeProjectPath>../docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug</OutputPath>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
   <ItemGroup>
     <None Remove="xunit" />
     <None Remove="ProxyClient\Main" />
@@ -30,20 +34,30 @@
     <None Remove="TunnelExecutors\" />
     <None Remove="Certificate\Models\" />
     <None Remove="YggDrasil\models\" />
-    <None Remove="AWS\" />
+    <None Remove="Certificate\Math\" />
+    <None Remove="Certificate\Delegates\" />
+    <None Remove="Certificate\CertificateTemplate\" />
+    <None Remove="gRPC\" />
+    <None Remove="gRPC\Models\" />
+    <None Remove="Protos\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BrotliSharpLib" Version="0.3.3" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
     <PackageReference Include="System.Runtime" Version="4.3.1" />
     <PackageReference Include="Microsoft.VisualStudio.Validation" Version="17.6.11" />
     <PackageReference Include="System.Security.Cryptography.Pkcs" Version="7.0.3" />
     <PackageReference Include="BouncyCastle.Cryptography" Version="2.2.1" />
-    <PackageReference Include="AWSSDK.Core" Version="3.7.204" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.59.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.60.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Google.Protobuf" Version="3.25.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="YggDrasil\" />
@@ -54,6 +68,14 @@
     <Folder Include="TunnelExecutors\" />
     <Folder Include="Certificate\Models\" />
     <Folder Include="YggDrasil\models\" />
-    <Folder Include="AWS\" />
+    <Folder Include="Certificate\Math\" />
+    <Folder Include="Certificate\Delegates\" />
+    <Folder Include="Certificate\CertificateTemplate\" />
+    <Folder Include="gRPC\" />
+    <Folder Include="gRPC\Models\" />
+    <Folder Include="Protos\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Protobuf Include="Protos\certificate.proto" GrpcServices="Client" />
   </ItemGroup>
 </Project>

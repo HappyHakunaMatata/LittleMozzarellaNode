@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
-using Node;
+using Node.TunnelManagers;
 
 
 namespace TestNode
@@ -11,7 +11,7 @@ namespace TestNode
     [TestClass]
     public class AddressTest
     {
-        ProxyServer proxyServer = new();
+        TunnelManager proxyServer = new SocketTunnelManager();
         [TestMethod]
         public void TestAddress_IsValid()
         {

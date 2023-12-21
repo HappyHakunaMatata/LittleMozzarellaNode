@@ -1,10 +1,13 @@
 ﻿using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography.Pkcs;
+using Node.Certificate.Models;
+using Node.Certificate.Template;
+using System.Security.Cryptography;
 
 namespace Node.Certificate
 {
-    public abstract class CertificateDirector : IDisposable
+    public abstract class CertificateDirector
     {
 
         private X509Certificate2? rootCertificate;
@@ -26,11 +29,43 @@ namespace Node.Certificate
             }
         }
 
-        public void GenerateCertificate(AbstractCertificateBuilder builder)
+        public async Task<FullCertificateAuthority> GenerateFullCertificateAuthority(AbstractCertificateBuilder builder, GenerateTypes generateTypes = GenerateTypes.Threads)
         {
-            builder.CreateCertificate();
+            await builder.GenerateKeys(generateTypes: generateTypes);
+            var cert = builder.CreateSelfSignedCertificate(builder.GetPrivate(), builder.GetPublicKey());
+            RootCertificate = cert;
+            builder.SaveCertificate(cert);
+            builder.SaveKey(builder.GetPrivate());
+            return builder.GetCertificateAuthority();
         }
 
+        public X509Certificate2 CreateSelfSignedCertificate(AbstractCertificateBuilder builder, byte[] privateKey, byte[] publicKey)
+        {
+            return builder.CreateSelfSignedCertificate(privateKey, publicKey);
+        }
+
+        public void CreateIdentity(AbstractCertificateBuilder builder, FullCertificateAuthority ca)
+        {
+            ArgumentNullException.ThrowIfNull(builder);
+            ArgumentNullException.ThrowIfNull(ca);
+            ArgumentNullException.ThrowIfNull(ca.PrivateKey);
+            ArgumentNullException.ThrowIfNull(ca.Cert);
+            try
+            {
+                var template = builder.CreateLeafTemplate();
+                byte[]? identityKey = null;
+                var identity = builder.NewIdentity(ca.Cert, ca.PrivateKey, template, out identityKey);
+                builder.SaveIdentity(identity);
+                if (identityKey != null)
+                {
+                    builder.SaveKey(identityKey);
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
         public X509Certificate2Collection FindCertificates(string findValue, StoreName storeName = StoreName.My,
             StoreLocation storeLocation = StoreLocation.CurrentUser)
@@ -72,23 +107,6 @@ namespace Node.Certificate
             }
         }
 
-        public void Sign(string path, X509Certificate2 certificateToSign)
-        {
-
-            string yourCertificatePassword = "pass";
-            X509Certificate2 Signer = new X509Certificate2(path, yourCertificatePassword, X509KeyStorageFlags.Exportable);
-            CmsSigner cmsSigner = new CmsSigner(Signer);
-
-
-            byte[] certificateBytes = certificateToSign.Export(X509ContentType.Cert);
-            SignedCms signedCms = new SignedCms(new ContentInfo(certificateBytes));
-            signedCms.ComputeSignature(cmsSigner);
-
-            // Сохраните подписанный сертификат в файл
-            byte[] signedData = signedCms.Encode();
-            File.WriteAllBytes("путь_к_подписанному_сертификату.p7b", signedData);
-
-        }
 
         public void RemoveFromStoreCertificate(X509Certificate2? certificate = null,
             StoreName storeName = StoreName.My,
@@ -115,36 +133,9 @@ namespace Node.Certificate
             }
         }
 
+
         public abstract bool TrustRootCertificateAsAdmin();
         public abstract bool RemoveTrustedRootCertificateAsAdmin();
-        
-
         internal readonly Regex CnRemoverRegex = new(@"^CN\s*=\s*", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-
-        private bool disposed;
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void Dispose(bool disposing)
-        {
-            if (disposed) return;
-
-            if (disposing)
-            {
-               
-            }
-
-            disposed = true;
-        }
-
-        ~CertificateDirector()
-        {
-            Dispose(false);
-        }
-       
     }
 }

@@ -4,16 +4,17 @@ using System.Net;
 using System.Net.Sockets;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Node;
-using Node.Session;
 using System.Text;
 using System.Security.Policy;
+using Node.TunnelManagers;
+using Node.TunnelExecutors.Models;
 
 namespace TestNode
 {
     [TestClass]
     public class ProxyTest
 	{
-        ProxyServer proxyServer = new();
+        TunnelManager proxyServer = new SocketTunnelManager();
 
         /// <summary>
         /// To use this test you have to change access modifiers
@@ -100,11 +101,6 @@ namespace TestNode
                 "CONNECT www.example.com:443 HTTPS/1.1",
                 "CONNECT www.example.com:443 HTTP1.1",
             };
-            ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
-            {
-                builder.AddConsole();
-            });
-            ILogger logger = loggerFactory.CreateLogger<Tunneling>();
             var FakeWebServer = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             FakeWebServer.Bind(new IPEndPoint(IPAddress.Loopback, 54321));
             FakeWebServer.Listen(1);
@@ -117,21 +113,17 @@ namespace TestNode
             Socket FakeClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             FakeClient.Connect(new IPEndPoint(IPAddress.Loopback, 12345));
             Socket FakeAcceptedClient = FakeProxyServer.Accept();
-            string[] requestParts;
+            RequestStruct? requestStruct = new RequestStruct();
             foreach (var i in check_list_true)
             {
-                requestParts = i.
-                Split("\n", StringSplitOptions.RemoveEmptyEntries)[0].
-                Split(" ", StringSplitOptions.RemoveEmptyEntries);
-                var result = await proxyServer.TryCreateTunnel(requestParts, FakeAcceptedClient);
+                var requestParts = Encoding.UTF8.GetBytes(i);
+                var result = proxyServer.TryCheckHttpMethod(requestParts, out requestStruct);
                 Assert.IsTrue(result);
             }
             foreach (var i in check_list_false)
             {
-                requestParts = i.
-                Split("\n", StringSplitOptions.RemoveEmptyEntries)[0].
-                Split(" ", StringSplitOptions.RemoveEmptyEntries);
-                var result = await proxyServer.TryCreateTunnel(requestParts, FakeAcceptedClient);
+                var requestParts = Encoding.UTF8.GetBytes(i);
+                var result = proxyServer.TryCheckHttpMethod(requestParts, out requestStruct);
                 Assert.IsFalse(result);
             }
         }

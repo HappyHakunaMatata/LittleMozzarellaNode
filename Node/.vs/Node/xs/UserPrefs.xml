@@ -1,48 +1,37 @@
-﻿<Properties StartupConfiguration="{C6AC3FBA-CBB2-40CF-A9FE-8237FE55E42F}|Default">
-  <DisabledProjects>
-    <String>../../Projects/TCP_TEST/TCP_TEST/TCP_TEST.csproj</String>
-  </DisabledProjects>
-  <MonoDevelop.Ide.ItemProperties.TestNode PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Node/Program.cs">
+﻿<Properties StartupConfiguration="{1B525D0D-E51F-4ABD-9992-1B2F70DCF4D4}|https">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../gRPCCertificateSign/appsettings.json">
     <Files>
-      <File FileName="Node/Certificate/AbstractCertificateBuilder.cs" Line="1" Column="1" />
-      <File FileName="Node/Program.cs" Line="95" Column="12" />
-      <File FileName="Node/TunnelManagers/TunnelManager.cs" Line="1" Column="1" />
-      <File FileName="Node/Certificate/Models/CertificateSettings.cs" Line="1" Column="1" />
-      <File FileName="TestFunc/Program.cs" Line="34" Column="33" />
-      <File FileName="Node/Certificate/CertificateDirector.cs" Line="31" Column="31" />
-      <File FileName="Node/Certificate/ConcreteBouncyCastleCertificateBuilder.cs" Line="116" Column="27" />
-      <File FileName="Node/Certificate/ConcreteSystemSecurityBuilder.cs" Line="88" Column="26" />
-      <File FileName="Node/AWS/CertificateRequestManager.cs" Line="1" Column="1" />
+      <File FileName="../gRPCCertificateSign/Program.cs" />
+      <File FileName="../gRPCCertificateSign/Protos/certificate.proto" />
+      <File FileName="../gRPCCertificateSign/Services/CertificatesClient.cs" />
+      <File FileName="Node/gRPC/Server.cs" />
+      <File FileName="../gRPCCertificateSign/appsettings.json" Line="16" Column="1" />
+      <File FileName="../gRPCCertificateSign/appsettings.Development.json" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Node" expanded="True">
-            <Node name="Node">
-              <Node name="Dependencies" expanded="True" />
-              <Node name="AWS" expanded="True" />
-              <Node name="Certificate" expanded="True" />
-              <Node name="Examples" expanded="True" />
-              <Node name="TunnelExecutors" expanded="True" />
-              <Node name="TunnelManagers" expanded="True" />
-              <Node name="Program.cs" selected="True" />
-            </Node>
-            <Node name="TestFunc">
-              <Node name="Dependencies" expanded="True" />
+          <Node name="Node">
+            <Node name="gRPCCertificateSign" expanded="True">
+              <Node name="appsettings.json" selected="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.Node PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.ItemProperties.docker-compose PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.ItemProperties.TestFunc PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.TestNode PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.ItemProperties.TestFunc PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <DisabledProjects>
+    <String>../../Projects/TCP_TEST/TCP_TEST/TCP_TEST.csproj</String>
+  </DisabledProjects>
+  <MonoDevelop.Ide.ItemProperties.docker-compose PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.ItemProperties.Node PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.ItemProperties.gRPCCertificateSign PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MultiItemStartupConfigurations />
 </Properties>

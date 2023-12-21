@@ -1,6 +1,8 @@
 ﻿using System.Net;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using Node.Certificate.Models;
+using Node.Certificate.Template;
 using Org.BouncyCastle.Asn1;
 using Org.BouncyCastle.Asn1.Pkcs;
 using Org.BouncyCastle.Asn1.X509;
@@ -41,7 +43,7 @@ internal class ConcreteBouncyCastleCertificateBuilder : AbstractCertificateBuild
 
         if (certificateSettings == null)
         {
-            _certificateSettings = new CertificateSettings();
+            _certificateSettings = new CertificateSettings(CertificateType.CA);
         }
         else
         {
@@ -68,7 +70,7 @@ internal class ConcreteBouncyCastleCertificateBuilder : AbstractCertificateBuild
         }
     }
 
-    public override X509Certificate2 GetResult()
+    public override X509Certificate2 GetCertificate()
     {
         try
         {
@@ -95,11 +97,7 @@ internal class ConcreteBouncyCastleCertificateBuilder : AbstractCertificateBuild
     }
 
 
-    public override void CreateCertificate()
-    {
-        var cn = $"CN={_certificateSettings.RootCertificateName}";
-        GenerateCertificate(cn, cn, _certificateSettings.Host, DateTime.UtcNow.AddDays(-_certificateSettings.CertificateGraceDays), DateTime.UtcNow.AddDays(_certificateSettings.CertificateValidDays));
-    }
+
 
     /// <summary>
     /// Set serial number
@@ -207,4 +205,43 @@ internal class ConcreteBouncyCastleCertificateBuilder : AbstractCertificateBuild
             return new X509Certificate2(ms.ToArray(), _certificateSettings.Pkcs12StorePassword, X509KeyStorageFlags.Exportable);
         }
     }
+
+
+    public override X509Certificate2 CreateSelfSignedCertificate(byte[] PrivKey, byte[] PubKey)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override byte[]? DoubleSHA256PublicKey(byte[] publickey)
+    {
+        throw new NotImplementedException();
+    }
+
+
+    public override GeneratedKeys GenerateKey(CancellationToken ctx, ushort minDifficulty = 8)
+    {
+        throw new NotImplementedException();
+    }
+
+
+    public override bool VerifyECDSASignatureWithoutHashing(byte[] key, byte[] data, byte[] signature)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SaveKey(byte[] key)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override CertificateTemplate CreateLeafTemplate()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override X509Certificate2Collection NewIdentity(X509Certificate2 Certificate, byte[] privateKey, CertificateTemplate template, out byte[]? privateEcdsaKey)
+    {
+        throw new NotImplementedException();
+    }
+   
 }

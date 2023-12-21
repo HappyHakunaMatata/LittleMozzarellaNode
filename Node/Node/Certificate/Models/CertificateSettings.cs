@@ -17,6 +17,32 @@ namespace Node.Certificate.Models
 
         public string PfxPath = "";
 
+        public string OrganizationName = "LittleMozzarella";
+
+        public bool IsCA;
+
+        public bool BasicConstraintsValid = true;
+
+        public DateTime date = new DateTime(0001, 01, 01, 12, 50, 00); //TODO change time to 12:50:00:00
+
+        public string CertPath;
+        public string KeyPath;
+
+        public CertificateSettings(CertificateType type)
+        {
+            if (type == CertificateType.CA)
+            {
+                IsCA = true;
+                CertPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), $"ca.cert");
+                KeyPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), $"ca.key");
+            }
+            else if (type == CertificateType.Identity)
+            {
+                IsCA = false;
+                CertPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), $"identity.cert");
+                KeyPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), $"identity.key");
+            }
+        }
 
         public string IssuerName
         {

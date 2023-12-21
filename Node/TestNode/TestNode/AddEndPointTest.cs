@@ -2,13 +2,14 @@
 using System.Net;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Node;
+using Node.TunnelManagers;
 
 namespace TestNode
 {
     [TestClass]
     public class AddEndPointTest
     {
-        ProxyServer proxyServer = new();
+        TunnelManager proxyServer = new SocketTunnelManager();
         [TestMethod]
         public void TestAddEndPoint_IsValid()
         {

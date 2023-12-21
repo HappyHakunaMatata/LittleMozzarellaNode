@@ -44,12 +44,15 @@ namespace Node.Certificate
                 if (process == null) return false;
 
                 process.WaitForExit();
-                File.Delete(pfxFileName);
             }
             catch
             {
 
                 return false;
+            }
+            finally
+            {
+                File.Delete(pfxFileName);
             }
 
             return true;

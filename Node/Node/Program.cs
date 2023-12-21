@@ -12,32 +12,79 @@ using Org.BouncyCastle.Utilities.Net;
 using Node.Examples;
 using Org.BouncyCastle.Tls;
 using System.Security.Cryptography;
+using System.Collections;
+using System.Net.Sockets;
+using Org.BouncyCastle.Asn1;
+using Org.BouncyCastle.X509;
+using Org.BouncyCastle.Asn1.X509;
+using System.Text;
+using static System.Environment;
 
 namespace Node
 {
     class Program
     {
-        static void Main()
+        static async Task Main()
         {
-            string address = "0.0.0.0";
-            string name = "0.0.0.0";
-            CertificateSettings certificateSettings = new();
-            certificateSettings.Host = address;
-            certificateSettings.RootCertificateName = name;
-            certificateSettings.IssuerName = name;
-            var certificateDirector = new OSXCertificateDirector();
-            ConcreteBouncyCastleCertificateBuilder builder = new(certificateSettings);
-            certificateDirector.GenerateCertificate(builder);
-            certificateDirector.RootCertificate = builder.GetResult();
+
+            CertificateSettings certificateSettings = new CertificateSettings(Certificate.Models.CertificateType.CA);
+            CertificateAuthorityConfig certificateAuthorityConfig = new CertificateAuthorityConfig();
+            certificateAuthorityConfig.Difficulty = 14;
+            ConcreteSystemSecurityBuilder builder = new ConcreteSystemSecurityBuilder(certificateAuthorityConfig, certificateSettings);
+            CertificateDirector director = new OSXCertificateDirector();
+            var certificate = await director.GenerateFullCertificateAuthority(builder);
+            certificateSettings = new CertificateSettings(Certificate.Models.CertificateType.Identity);
+            builder = new ConcreteSystemSecurityBuilder(certificateSettings);
+            director.CreateIdentity(builder, certificate);
+
+            CertificateAuthorizer authorizer = new CertificateAuthorizer();
+            var ca = authorizer.LoadFullCAConfig();
+            //Console.WriteLine($"Serial: {ca.Cert}");
+            Console.WriteLine($"Algorithm: {ca.algorithm.SignatureAlgorithm}");
+            Console.WriteLine($"NodeID: {ca.NodeID.Length}");
+            Console.WriteLine($"Rest chain: {ca.RestChain.Length}");
             
-            var t = certificateDirector.TrustRootCertificateAsAdmin();
-            Console.WriteLine(t);
+            authorizer = new CertificateAuthorizer(SpecialFolder.UserProfile);
+            ca = authorizer.LoadFullCAConfig();
+            //Console.WriteLine($"Serial: {ca.Cert}");
+            Console.WriteLine($"Algorithm: {ca.algorithm.SignatureAlgorithm}");
+            Console.WriteLine($"NodeID: {ca.NodeID.Length}");
+            Console.WriteLine($"Rest chain: {ca.RestChain.Length}");
+
+
+
+
+            /*Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            socket.Bind(new IPEndPoint(System.Net.IPAddress.Parse("127.0.0.1"), 8080));
+            socket.Listen(10);
+            Console.WriteLine("Running");
+            await socket.AcceptAsync();
+            Console.WriteLine("Accepted");
+            */
+
+            /*CertificateSettings certificateSettings = new();
+            ConcreteSystemSecurityBuilder builder = new(certificateSettings);
+            var request = builder.CreateCertificateRequest("CN=localhost", HashAlgorithmName.SHA256);
+            var base_64 = builder.GetBase64(request);
+            CertificateRequestManager manager = new("localhost", base_64);
+            var file = manager.ReadYawl();
+            if (file != null)
+            {
+                manager.CreateRequest(file);
+            }
+            else
+            {
+                Environment.Exit(1);
+            }
+            var client = manager.CreateClient();*/
+            //await manager.Approve(client);
         }
+
         static void Main2()
         {
             string address = "127.0.0.1";
             string name = "127.0.0.1";
-            CertificateSettings certificateSettings = new();
+            CertificateSettings certificateSettings = new CertificateSettings(Certificate.Models.CertificateType.CA);
             certificateSettings.Host = address;
             certificateSettings.RootCertificateName = name;
             certificateSettings.IssuerName = name;
@@ -77,8 +124,8 @@ namespace Node
             else
             {
                 ConcreteBouncyCastleCertificateBuilder builder = new(certificateSettings);
-                certificateDirector.GenerateCertificate(builder);
-                certificateDirector.RootCertificate = builder.GetResult();
+                //certificateDirector.GenerateCertificate(builder);
+                certificateDirector.RootCertificate = builder.GetCertificate();
                 certificateDirector.TrustRootCertificateAsAdmin();
                 collection = certificateDirector.FindCertificates($"CN={name}");
                 value = collection.FirstOrDefault();
@@ -87,12 +134,6 @@ namespace Node
             {
                 Console.WriteLine($"Yggdrasil error: {task.Result.Item1}\n Yggdrasil message: {task.Result.Item2}");
             }
-
-
-            /*catch
-            {
-                //Environment.Exit(1);
-            }*/
 
 
 

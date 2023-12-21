@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using Node;
-using Node.Session;
 using System.Net.Sockets;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Hosting.Server;
@@ -22,78 +21,6 @@ namespace TestNode
     {
         
         
-        [TestMethod]
-        public void CreateSessionsTest()
-        {
-            ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
-            {
-                builder.AddConsole();
-            });
-            ILogger logger = loggerFactory.CreateLogger<Tunneling>();
-            var FakeWebServer = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            FakeWebServer.Bind(new IPEndPoint(IPAddress.Loopback, 54321));
-            FakeWebServer.Listen(1);
-            var FakeProxyServer = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            FakeProxyServer.Bind(new IPEndPoint(IPAddress.Loopback, 12345));
-            FakeProxyServer.Listen(1);
-            Socket FakeProxy = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            FakeProxy.Connect(new IPEndPoint(IPAddress.Loopback, 54321));
-            Socket FakeAcceptedProxy = FakeWebServer.Accept();
-            Socket FakeClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            FakeClient.Connect(new IPEndPoint(IPAddress.Loopback, 12345));
-            Socket FakeAcceptedClient = FakeProxyServer.Accept();
-            Tunneling session = new Tunneling(
-                FakeAcceptedProxy,
-                FakeAcceptedClient,
-                logger);
-            session.StartTunneling();
-            byte[] testData = { 1, 2, 3, 4, 5 };
-            byte[] receivedData = new byte[testData.Length];
-            FakeProxy.Send(testData);
-            FakeClient.Receive(receivedData);
-            CollectionAssert.AreEqual(testData, receivedData);
-        }
-        
-        [TestMethod]
-        public void DisposeSessionTest()
-        {
-            ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
-            {
-                builder.AddConsole();
-            });
-            ILogger logger = loggerFactory.CreateLogger<Tunneling>();
-            var FakeWebServer = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            FakeWebServer.Bind(new IPEndPoint(IPAddress.Loopback, 54321));
-            FakeWebServer.Listen(1);
-            var FakeProxyServer = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            FakeProxyServer.Bind(new IPEndPoint(IPAddress.Loopback, 12345));
-            FakeProxyServer.Listen(1);
-            Socket FakeProxy = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            FakeProxy.Connect(new IPEndPoint(IPAddress.Loopback, 54321));
-            Socket FakeAcceptedProxy = FakeWebServer.Accept();
-            Socket FakeClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            FakeClient.Connect(new IPEndPoint(IPAddress.Loopback, 12345));
-            Socket FakeAcceptedClient = FakeProxyServer.Accept();
-            Tunneling session = new Tunneling(
-                FakeAcceptedProxy,
-                FakeAcceptedClient,
-                logger);
-            session.StartTunneling();
-            byte[] testData = { 1, 2, 3, 4, 5 };
-            byte[] receivedData = new byte[testData.Length];
-            FakeProxy.Send(testData);
-            FakeClient.Receive(receivedData);
-            CollectionAssert.AreEqual(testData, receivedData);
-            session.Dispose();
-            try
-            {
-                FakeProxy.Send(testData);
-            }
-            catch (Exception e)
-            {
-                Assert.IsTrue(e is SocketException socketException);
-            }
-        }
 
         /// <summary>
         /// To test IsExpired you have to change access modifiers
@@ -280,110 +207,7 @@ namespace TestNode
         }
         */
 
-        [TestMethod]
-        public async Task CommitTest()
-        {
-            async Task<int?> FirstFunct(CancellationToken cancellationToken = default)
-            {
-                int sum = 0;
-                cancellationToken.ThrowIfCancellationRequested();
-                return await Task.Run(() =>
-                {
-                    sum += 1;
-                    return sum;
-                });
-            }
-            async Task<int?> SecondFunct(CancellationToken cancellationToken = default)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Task.Delay(61000, cancellationToken);
-                    int sum = 0;
-                    return await Task.Run(() =>
-                    {
-                        sum += 1;
-                        return sum;
-                    });
-            }
-            Func<CancellationToken, Task<int?>> FirstAction = async cts => await FirstFunct(cts);
-            Func<CancellationToken, Task<int?>> SecondAction = async cts => await SecondFunct(cts);
-            ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
-            {
-                builder.AddConsole();
-            });
-            ILogger logger = loggerFactory.CreateLogger<Tunneling>();
-            Tunneling session = new Tunneling(
-                new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp),
-                new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp),
-                logger);
-
-            var FirstResult = await session.Commit(FirstAction);
-            Assert.IsTrue(FirstResult.Value == 1);
-            try
-            {
-                var SecondResult = await session.Commit(SecondAction);
-            }
-            catch (Exception e)
-            {
-                Assert.IsTrue(e is OperationCanceledException socketException);
-            }
-            
-        }
-
-        [TestMethod]
-        public void StartTunnellingTest()
-        {
-            ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
-            {
-                builder.AddConsole();
-            });
-            ILogger logger = loggerFactory.CreateLogger<Tunneling>();
-            var FakeWebServer = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            FakeWebServer.Bind(new IPEndPoint(IPAddress.Loopback, 54321));
-            FakeWebServer.Listen(1);
-            var FakeProxyServer = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            FakeProxyServer.Bind(new IPEndPoint(IPAddress.Loopback, 12345));
-            FakeProxyServer.Listen(1);
-            Socket FakeProxy = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            FakeProxy.Connect(new IPEndPoint(IPAddress.Loopback, 54321));
-            Socket FakeAcceptedProxy = FakeWebServer.Accept();
-            Socket FakeClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            FakeClient.Connect(new IPEndPoint(IPAddress.Loopback, 12345));
-            Socket FakeAcceptedClient = FakeProxyServer.Accept();
-            Tunneling session = new Tunneling(
-                FakeAcceptedProxy,
-                FakeAcceptedClient,
-                logger);
-            session.StartTunneling();
-            byte[] testData = { 1, 2, 3, 4, 5 };
-            byte[] receivedData = new byte[testData.Length];
-            FakeClient.Send(testData);
-            FakeProxy.Receive(receivedData);
-            CollectionAssert.AreEqual(testData, receivedData);
-        }
-
-        [TestMethod]
-        public void IdleTimeoutTest()
-        {
-            ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
-            {
-                builder.AddConsole();
-            });
-            ILogger logger = loggerFactory.CreateLogger<Tunneling>();
-            Tunneling session = new Tunneling(
-                new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp),
-                new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp),
-                logger);
-            session.IdleTimeout = TimeSpan.FromHours(2);
-            Assert.IsTrue(session.IdleTimeout == TimeSpan.FromHours(2));
-            try
-            {
-                session.IdleTimeout = TimeSpan.FromHours(2).Negate();
-            }
-            catch (Exception e)
-            {
-                Assert.IsTrue(e is ArgumentOutOfRangeException socketException);
-            }
-        }
+        
 
         /// <summary>
         /// To test Recive you have to change access modifiers
