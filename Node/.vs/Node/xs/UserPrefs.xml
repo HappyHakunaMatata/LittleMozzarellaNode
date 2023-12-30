@@ -1,37 +1,55 @@
-﻿<Properties StartupConfiguration="{1B525D0D-E51F-4ABD-9992-1B2F70DCF4D4}|https">
-  <MonoDevelop.Ide.Workbench ActiveDocument="../gRPCCertificateSign/appsettings.json">
+﻿<Properties StartupConfiguration="Multiple Projects">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <DisabledProjects>
+    <String>../../Projects/TCP_TEST/TCP_TEST/TCP_TEST.csproj</String>
+  </DisabledProjects>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.TestFunc PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.ItemProperties.gRPCCertificateSign PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations>
+    <MultiItemSolutionRunConfiguration Id="Multiple Projects" Name="Multiple Projects">
+      <Items>
+        <StartupItem ItemId="{1B525D0D-E51F-4ABD-9992-1B2F70DCF4D4}" ItemName="gRPCCertificateSign" ConfigurationId="http" />
+        <StartupItem ItemId="{D06A42BE-5517-4D51-98D5-520FCF1109B6}" ItemName="Node" ConfigurationId="Default" />
+      </Items>
+    </MultiItemSolutionRunConfiguration>
+  </MultiItemStartupConfigurations>
+  <MonoDevelop.Ide.ItemProperties.TestNode PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.ItemProperties.Node PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.ItemProperties.docker-compose PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../gRPCCertificateSign/Services/CertificateSignService.cs">
     <Files>
-      <File FileName="../gRPCCertificateSign/Program.cs" />
-      <File FileName="../gRPCCertificateSign/Protos/certificate.proto" />
-      <File FileName="../gRPCCertificateSign/Services/CertificatesClient.cs" />
-      <File FileName="Node/gRPC/Server.cs" />
-      <File FileName="../gRPCCertificateSign/appsettings.json" Line="16" Column="1" />
-      <File FileName="../gRPCCertificateSign/appsettings.Development.json" />
+      <File FileName="../gRPCCertificateSign/Program.cs" Line="14" Column="1" />
+      <File FileName="../gRPCCertificateSign/Protos/certificate.proto" Line="3" Column="47" />
+      <File FileName="../gRPCCertificateSign/Services/CertificatesClient.cs" Line="25" Column="69" />
+      <File FileName="../gRPCCertificateSign/Models/Peer.cs" Line="1" Column="1" />
+      <File FileName="Node/Program.cs" Line="48" Column="42" />
+      <File FileName="Node/gRPC/CertificateClient.cs" Line="10" Column="58" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Node">
-            <Node name="gRPCCertificateSign" expanded="True">
-              <Node name="appsettings.json" selected="True" />
+          <Node name="Node" expanded="True">
+            <Node name="gRPCCertificateSign">
+              <Node name="Models" expanded="True" />
+              <Node name="Protos" expanded="True" />
+              <Node name="Services" expanded="True">
+                <Node name="CertificateSignService.cs" selected="True" />
+              </Node>
+              <Node name="appsettings.json" expanded="True" />
+            </Node>
+            <Node name="Node">
+              <Node name="gRPC" expanded="True" />
             </Node>
           </Node>
         </State>
       </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.TestNode PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.ItemProperties.TestFunc PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <DisabledProjects>
-    <String>../../Projects/TCP_TEST/TCP_TEST/TCP_TEST.csproj</String>
-  </DisabledProjects>
-  <MonoDevelop.Ide.ItemProperties.docker-compose PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.ItemProperties.Node PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.ItemProperties.gRPCCertificateSign PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MultiItemStartupConfigurations />
 </Properties>

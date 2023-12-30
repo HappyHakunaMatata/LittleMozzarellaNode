@@ -38,7 +38,6 @@
     <None Remove="Certificate\Delegates\" />
     <None Remove="Certificate\CertificateTemplate\" />
     <None Remove="gRPC\" />
-    <None Remove="gRPC\Models\" />
     <None Remove="Protos\" />
   </ItemGroup>
   <ItemGroup>
@@ -72,7 +71,6 @@
     <Folder Include="Certificate\Delegates\" />
     <Folder Include="Certificate\CertificateTemplate\" />
     <Folder Include="gRPC\" />
-    <Folder Include="gRPC\Models\" />
     <Folder Include="Protos\" />
   </ItemGroup>
   <ItemGroup>

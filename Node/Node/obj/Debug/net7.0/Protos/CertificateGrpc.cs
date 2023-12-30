@@ -7,10 +7,10 @@
 
 using grpc = global::Grpc.Core;
 
-namespace Certificatepb {
-  public static partial class Certificates
+namespace gRPCCertificateSign {
+  public static partial class CertificateSign
   {
-    static readonly string __ServiceName = "node.Certificates";
+    static readonly string __ServiceName = "node.CertificateSign";
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static void __Helper_SerializeMessage(global::Google.Protobuf.IMessage message, grpc::SerializationContext context)
@@ -46,12 +46,12 @@ namespace Certificatepb {
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::Certificatepb.SigningRequest> __Marshaller_node_SigningRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Certificatepb.SigningRequest.Parser));
+    static readonly grpc::Marshaller<global::gRPCCertificateSign.SigningRequest> __Marshaller_node_SigningRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::gRPCCertificateSign.SigningRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::Certificatepb.SigningResponse> __Marshaller_node_SigningResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Certificatepb.SigningResponse.Parser));
+    static readonly grpc::Marshaller<global::gRPCCertificateSign.SigningResponse> __Marshaller_node_SigningResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::gRPCCertificateSign.SigningResponse.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::Certificatepb.SigningRequest, global::Certificatepb.SigningResponse> __Method_Sign = new grpc::Method<global::Certificatepb.SigningRequest, global::Certificatepb.SigningResponse>(
+    static readonly grpc::Method<global::gRPCCertificateSign.SigningRequest, global::gRPCCertificateSign.SigningResponse> __Method_Sign = new grpc::Method<global::gRPCCertificateSign.SigningRequest, global::gRPCCertificateSign.SigningResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
         "Sign",
@@ -61,61 +61,61 @@ namespace Certificatepb {
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
     {
-      get { return global::Certificatepb.CertificateReflection.Descriptor.Services[0]; }
+      get { return global::gRPCCertificateSign.CertificateReflection.Descriptor.Services[0]; }
     }
 
-    /// <summary>Client for Certificates</summary>
-    public partial class CertificatesClient : grpc::ClientBase<CertificatesClient>
+    /// <summary>Client for CertificateSign</summary>
+    public partial class CertificateSignClient : grpc::ClientBase<CertificateSignClient>
     {
-      /// <summary>Creates a new client for Certificates</summary>
+      /// <summary>Creates a new client for CertificateSign</summary>
       /// <param name="channel">The channel to use to make remote calls.</param>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public CertificatesClient(grpc::ChannelBase channel) : base(channel)
+      public CertificateSignClient(grpc::ChannelBase channel) : base(channel)
       {
       }
-      /// <summary>Creates a new client for Certificates that uses a custom <c>CallInvoker</c>.</summary>
+      /// <summary>Creates a new client for CertificateSign that uses a custom <c>CallInvoker</c>.</summary>
       /// <param name="callInvoker">The callInvoker to use to make remote calls.</param>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public CertificatesClient(grpc::CallInvoker callInvoker) : base(callInvoker)
+      public CertificateSignClient(grpc::CallInvoker callInvoker) : base(callInvoker)
       {
       }
       /// <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      protected CertificatesClient() : base()
+      protected CertificateSignClient() : base()
       {
       }
       /// <summary>Protected constructor to allow creation of configured clients.</summary>
       /// <param name="configuration">The client configuration.</param>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      protected CertificatesClient(ClientBaseConfiguration configuration) : base(configuration)
+      protected CertificateSignClient(ClientBaseConfiguration configuration) : base(configuration)
       {
       }
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::Certificatepb.SigningResponse Sign(global::Certificatepb.SigningRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::gRPCCertificateSign.SigningResponse Sign(global::gRPCCertificateSign.SigningRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return Sign(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::Certificatepb.SigningResponse Sign(global::Certificatepb.SigningRequest request, grpc::CallOptions options)
+      public virtual global::gRPCCertificateSign.SigningResponse Sign(global::gRPCCertificateSign.SigningRequest request, grpc::CallOptions options)
       {
         return CallInvoker.BlockingUnaryCall(__Method_Sign, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::Certificatepb.SigningResponse> SignAsync(global::Certificatepb.SigningRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::gRPCCertificateSign.SigningResponse> SignAsync(global::gRPCCertificateSign.SigningRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return SignAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::Certificatepb.SigningResponse> SignAsync(global::Certificatepb.SigningRequest request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::gRPCCertificateSign.SigningResponse> SignAsync(global::gRPCCertificateSign.SigningRequest request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncUnaryCall(__Method_Sign, null, options, request);
       }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      protected override CertificatesClient NewInstance(ClientBaseConfiguration configuration)
+      protected override CertificateSignClient NewInstance(ClientBaseConfiguration configuration)
       {
-        return new CertificatesClient(configuration);
+        return new CertificateSignClient(configuration);
       }
     }
 

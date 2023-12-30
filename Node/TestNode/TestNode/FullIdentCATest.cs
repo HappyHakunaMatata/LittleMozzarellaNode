@@ -110,11 +110,13 @@ namespace TestNode
             Assert.IsTrue(identity.NodeID.Length == 32);
             Assert.IsTrue(identity.RestChain.Length >= 0);
             Assert.IsTrue(identity.NodeID[identity.NodeID.Length - 1] >= 0);
+            
             Assert.IsTrue(ca.Cert != null);
             Assert.IsTrue(ca.algorithm.SignatureAlgorithm == "ECDsa");
             Assert.IsTrue(ca.NodeID.Length == 32);
             Assert.IsTrue(ca.RestChain.Length >= 1);
             Assert.IsTrue(ca.NodeID[ca.NodeID.Length-1] >= 0);
+            Assert.IsTrue(ca.PrivateKey != null);
 
         }
 

@@ -19,6 +19,8 @@ using Org.BouncyCastle.X509;
 using Org.BouncyCastle.Asn1.X509;
 using System.Text;
 using static System.Environment;
+using Node.gRPC;
+using gRPCCertificateSign;
 
 namespace Node
 {
@@ -27,7 +29,7 @@ namespace Node
         static async Task Main()
         {
 
-            CertificateSettings certificateSettings = new CertificateSettings(Certificate.Models.CertificateType.CA);
+            /*CertificateSettings certificateSettings = new CertificateSettings(Certificate.Models.CertificateType.CA);
             CertificateAuthorityConfig certificateAuthorityConfig = new CertificateAuthorityConfig();
             certificateAuthorityConfig.Difficulty = 14;
             ConcreteSystemSecurityBuilder builder = new ConcreteSystemSecurityBuilder(certificateAuthorityConfig, certificateSettings);
@@ -36,23 +38,14 @@ namespace Node
             certificateSettings = new CertificateSettings(Certificate.Models.CertificateType.Identity);
             builder = new ConcreteSystemSecurityBuilder(certificateSettings);
             director.CreateIdentity(builder, certificate);
-
-            CertificateAuthorizer authorizer = new CertificateAuthorizer();
+            */
+            Thread.Sleep(10000);
+            var authorizer = new CertificateAuthorizer(SpecialFolder.UserProfile);
             var ca = authorizer.LoadFullCAConfig();
-            //Console.WriteLine($"Serial: {ca.Cert}");
-            Console.WriteLine($"Algorithm: {ca.algorithm.SignatureAlgorithm}");
-            Console.WriteLine($"NodeID: {ca.NodeID.Length}");
-            Console.WriteLine($"Rest chain: {ca.RestChain.Length}");
-            
-            authorizer = new CertificateAuthorizer(SpecialFolder.UserProfile);
-            ca = authorizer.LoadFullCAConfig();
-            //Console.WriteLine($"Serial: {ca.Cert}");
-            Console.WriteLine($"Algorithm: {ca.algorithm.SignatureAlgorithm}");
-            Console.WriteLine($"NodeID: {ca.NodeID.Length}");
-            Console.WriteLine($"Rest chain: {ca.RestChain.Length}");
-
-
-
+            var ident = authorizer.LoadIdentConfig();
+            var client = new CertificateClient();
+            var res = await client.Sign();
+            Console.WriteLine(res.Count);
 
             /*Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             socket.Bind(new IPEndPoint(System.Net.IPAddress.Parse("127.0.0.1"), 8080));

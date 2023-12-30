@@ -428,6 +428,18 @@ namespace Node.Certificate
         }
 
 
+        public X509Certificate2 SignCertificate(X509Certificate2 issuer, byte[] privateKey, byte[] publicKey, X509Certificate2 template)
+        {
+            using (var ecdsa = ECDsa.Create())
+            {
+                ecdsa.ImportSubjectPublicKeyInfo(publicKey, out _);
+                ecdsa.ImportPkcs8PrivateKey(privateKey, out _);
+                var certificateRequest = new CertificateRequest(template.SubjectName, ecdsa, HashAlgorithmName.SHA256);
+                return certificateRequest.Create(issuer, _certificateSettings.date, _certificateSettings.date, template.SerialNumberBytes.ToArray());
+            }
+        }
+
+
         /// <summary>
         /// 
         /// </summary>

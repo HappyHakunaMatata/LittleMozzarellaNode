@@ -41,18 +41,18 @@ namespace Node.Certificate
         }
 
         //TODO: Dispose for AsyncAlgorithm
-        public AsymmetricAlgorithm? PrivateKeyFromPEM(string kb)
+        public AsymmetricAlgorithm? PrivateKeyFromPEM(string kb, SignatureAlgorithmName name)
 		{
-            ECDsa? EcDsa;
-            var res = TryImportECPrivateKey(kb, out EcDsa);
-            if (res && EcDsa != null)
+            if (name == SignatureAlgorithmName.sha256ECDSA)
             {
+                ECDsa? EcDsa = null;
+                TryImportECPrivateKey(kb, out EcDsa);
                 return EcDsa;
             }
-            RSA? rsa;
-            res = TryImportRSAPrivateKey(kb, out rsa);
-            if (res && rsa != null)
+            if (name == SignatureAlgorithmName.sha256ECDSA)
             {
+                RSA? rsa = null;
+                TryImportRSAPrivateKey(kb, out rsa);
                 return rsa;
             }
             return null;
@@ -95,7 +95,9 @@ namespace Node.Certificate
         {
             var peerConfig = LoadPeerCAConfig();
             var keyPem = File.ReadAllText(CAkey);
-            var k = PrivateKeyFromPEM(keyPem);
+            SignatureAlgorithm signatureAlgorithm = new();
+            var name = signatureAlgorithm.GetSignatureAlgorithm(peerConfig.Cert.SignatureAlgorithm.FriendlyName);
+            var k = PrivateKeyFromPEM(keyPem, name);
             if (k == null)
             {
                 throw new ArgumentNullException();
@@ -152,12 +154,13 @@ namespace Node.Certificate
         }
 
 
-        public PeerIdentity LoadIdentConfig()
+        public FullIdentity LoadIdentConfig()
 		{
             var certs = new X509Certificate2Collection();
             certs.Import(Identcert);
             var keyBytes = File.ReadAllBytes(IdentKey);
-            return PeerIdentityFromChain(certs);
+            var peerIdentity = PeerIdentityFromChain(certs);
+            return new FullIdentity(peerIdentity, keyBytes);
         }
 
 

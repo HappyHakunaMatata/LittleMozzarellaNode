@@ -1,12 +1,11 @@
-﻿
-syntax = "proto3";
+﻿syntax = "proto3";
 
-option csharp_namespace = "Certificatepb";
+option csharp_namespace = "gRPCCertificateSign";
 
 package node;
 
 
-service Certificates {
+service CertificateSign {
     rpc Sign(SigningRequest) returns (SigningResponse);
 }
 

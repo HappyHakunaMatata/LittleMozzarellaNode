@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace Certificatepb {
+namespace gRPCCertificateSign {
 
   /// <summary>Holder for reflection information generated from Protos/certificate.proto</summary>
   public static partial class CertificateReflection {
@@ -26,14 +26,15 @@ namespace Certificatepb {
           string.Concat(
             "ChhQcm90b3MvY2VydGlmaWNhdGUucHJvdG8SBG5vZGUiNwoOU2lnbmluZ1Jl",
             "cXVlc3QSEgoKYXV0aF90b2tlbhgBIAEoCRIRCgl0aW1lc3RhbXAYAiABKAMi",
-            "IAoPU2lnbmluZ1Jlc3BvbnNlEg0KBWNoYWluGAEgAygMMkMKDENlcnRpZmlj",
-            "YXRlcxIzCgRTaWduEhQubm9kZS5TaWduaW5nUmVxdWVzdBoVLm5vZGUuU2ln",
-            "bmluZ1Jlc3BvbnNlQhCqAg1DZXJ0aWZpY2F0ZXBiYgZwcm90bzM="));
+            "IAoPU2lnbmluZ1Jlc3BvbnNlEg0KBWNoYWluGAEgAygMMkYKD0NlcnRpZmlj",
+            "YXRlU2lnbhIzCgRTaWduEhQubm9kZS5TaWduaW5nUmVxdWVzdBoVLm5vZGUu",
+            "U2lnbmluZ1Jlc3BvbnNlQhaqAhNnUlBDQ2VydGlmaWNhdGVTaWduYgZwcm90",
+            "bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Certificatepb.SigningRequest), global::Certificatepb.SigningRequest.Parser, new[]{ "AuthToken", "Timestamp" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Certificatepb.SigningResponse), global::Certificatepb.SigningResponse.Parser, new[]{ "Chain" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::gRPCCertificateSign.SigningRequest), global::gRPCCertificateSign.SigningRequest.Parser, new[]{ "AuthToken", "Timestamp" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::gRPCCertificateSign.SigningResponse), global::gRPCCertificateSign.SigningResponse.Parser, new[]{ "Chain" }, null, null, null, null)
           }));
     }
     #endregion
@@ -55,7 +56,7 @@ namespace Certificatepb {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Certificatepb.CertificateReflection.Descriptor.MessageTypes[0]; }
+      get { return global::gRPCCertificateSign.CertificateReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -282,7 +283,7 @@ namespace Certificatepb {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Certificatepb.CertificateReflection.Descriptor.MessageTypes[1]; }
+      get { return global::gRPCCertificateSign.CertificateReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
