@@ -1,2 +1,0 @@
-obj/Debug/net7.0/Protos/Certificate.cs \
-obj/Debug/net7.0/Protos/CertificateGrpc.cs: Protos/certificate.proto
