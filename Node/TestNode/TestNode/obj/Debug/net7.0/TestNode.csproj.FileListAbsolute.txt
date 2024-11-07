@@ -135,3 +135,10 @@
 /Users/main/Desktop/Node/TestNode/TestNode/obj/Debug/net7.0/TestNode.pdb
 /Users/main/Desktop/Node/TestNode/TestNode/obj/Debug/net7.0/TestNode.genruntimeconfig.cache
 /Users/main/Desktop/Node/TestNode/TestNode/obj/Debug/net7.0/ref/TestNode.dll
+/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/TestNode/TestNode/bin/Debug/net7.0/CoverletSourceRootsMapping
+/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/TestNode/TestNode/obj/Debug/net7.0/TestNode.csproj.AssemblyReference.cache
+/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/TestNode/TestNode/obj/Debug/net7.0/TestNode.GeneratedMSBuildEditorConfig.editorconfig
+/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/TestNode/TestNode/obj/Debug/net7.0/TestNode.AssemblyInfoInputs.cache
+/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/TestNode/TestNode/obj/Debug/net7.0/TestNode.AssemblyInfo.cs
+/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/TestNode/TestNode/obj/Debug/net7.0/TestNode.csproj.CoreCompileInputs.cache
+/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/TestNode/TestNode/obj/Debug/net7.0/TestNode.sourcelink.json

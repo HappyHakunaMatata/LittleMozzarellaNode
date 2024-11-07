@@ -1,0 +1,15 @@
+/Users/user/Documents/GitHub/LittleMozzarellaNode/Client/bin/Debug/net8.0/Client
+/Users/user/Documents/GitHub/LittleMozzarellaNode/Client/bin/Debug/net8.0/Client.deps.json
+/Users/user/Documents/GitHub/LittleMozzarellaNode/Client/bin/Debug/net8.0/Client.runtimeconfig.json
+/Users/user/Documents/GitHub/LittleMozzarellaNode/Client/bin/Debug/net8.0/Client.dll
+/Users/user/Documents/GitHub/LittleMozzarellaNode/Client/bin/Debug/net8.0/Client.pdb
+/Users/user/Documents/GitHub/LittleMozzarellaNode/Client/obj/Debug/net8.0/Client.GeneratedMSBuildEditorConfig.editorconfig
+/Users/user/Documents/GitHub/LittleMozzarellaNode/Client/obj/Debug/net8.0/Client.AssemblyInfoInputs.cache
+/Users/user/Documents/GitHub/LittleMozzarellaNode/Client/obj/Debug/net8.0/Client.AssemblyInfo.cs
+/Users/user/Documents/GitHub/LittleMozzarellaNode/Client/obj/Debug/net8.0/Client.csproj.CoreCompileInputs.cache
+/Users/user/Documents/GitHub/LittleMozzarellaNode/Client/obj/Debug/net8.0/Client.sourcelink.json
+/Users/user/Documents/GitHub/LittleMozzarellaNode/Client/obj/Debug/net8.0/Client.dll
+/Users/user/Documents/GitHub/LittleMozzarellaNode/Client/obj/Debug/net8.0/refint/Client.dll
+/Users/user/Documents/GitHub/LittleMozzarellaNode/Client/obj/Debug/net8.0/Client.pdb
+/Users/user/Documents/GitHub/LittleMozzarellaNode/Client/obj/Debug/net8.0/Client.genruntimeconfig.cache
+/Users/user/Documents/GitHub/LittleMozzarellaNode/Client/obj/Debug/net8.0/ref/Client.dll

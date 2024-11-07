@@ -4,6 +4,77 @@
     "/Users/user/Documents/GitHub/LittleMozzarellaNode/gRPCCertificateSign/gRPCCertificateSign.csproj": {}
   },
   "projects": {
+    "/Users/user/Documents/GitHub/LittleMozzarellaNode/Common/Common.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/user/Documents/GitHub/LittleMozzarellaNode/Common/Common.csproj",
+        "projectName": "Common",
+        "projectPath": "/Users/user/Documents/GitHub/LittleMozzarellaNode/Common/Common.csproj",
+        "packagesPath": "/Users/user/.nuget/packages/",
+        "outputPath": "/Users/user/Documents/GitHub/LittleMozzarellaNode/Common/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/user/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Grpc.AspNetCore": {
+              "target": "Package",
+              "version": "[2.62.0, )"
+            },
+            "Grpc.Core": {
+              "target": "Package",
+              "version": "[2.46.6, )"
+            },
+            "Microsoft.Extensions.Primitives": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Portable.BouncyCastle": {
+              "target": "Package",
+              "version": "[1.9.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "/Users/user/Documents/GitHub/LittleMozzarellaNode/gRPCCertificateSign/gRPCCertificateSign.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -17,15 +88,14 @@
           "/Users/user/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "net7.0"
+          "net8.0"
         ],
         "sources": {
-          "/usr/local/share/dotnet/sdk/7.0.311/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net7.0": {
-            "targetAlias": "net7.0",
+          "net8.0": {
+            "targetAlias": "net8.0",
             "projectReferences": {
               "/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/Node/Node.csproj": {
                 "projectPath": "/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/Node/Node.csproj"
@@ -40,12 +110,52 @@
         }
       },
       "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
+        "net8.0": {
+          "targetAlias": "net8.0",
           "dependencies": {
+            "AWSSDK.ACMPCA": {
+              "target": "Package",
+              "version": "[3.7.301.11, )"
+            },
+            "AWSSDK.CertificateManager": {
+              "target": "Package",
+              "version": "[3.7.300.52, )"
+            },
+            "AWSSDK.Core": {
+              "target": "Package",
+              "version": "[3.7.302.12, )"
+            },
+            "AWSSDK.IoT": {
+              "target": "Package",
+              "version": "[3.7.306.4, )"
+            },
+            "AWSSDK.KeyManagementService": {
+              "target": "Package",
+              "version": "[3.7.300.52, )"
+            },
+            "Certes": {
+              "target": "Package",
+              "version": "[3.0.4, )"
+            },
             "Grpc.AspNetCore": {
               "target": "Package",
-              "version": "[2.49.0, )"
+              "version": "[2.60.0, )"
+            },
+            "Grpc.Net.Client.Web": {
+              "target": "Package",
+              "version": "[2.60.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.Certificate": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
+            "System.Configuration.ConfigurationManager": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [
@@ -67,7 +177,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.311/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
@@ -84,15 +194,19 @@
           "/Users/user/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "net7.0"
+          "net8.0"
         ],
         "sources": {
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net7.0": {
-            "targetAlias": "net7.0",
-            "projectReferences": {}
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/user/Documents/GitHub/LittleMozzarellaNode/Common/Common.csproj": {
+                "projectPath": "/Users/user/Documents/GitHub/LittleMozzarellaNode/Common/Common.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -102,30 +216,30 @@
         }
       },
       "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
+        "net8.0": {
+          "targetAlias": "net8.0",
           "dependencies": {
-            "BouncyCastle.Cryptography": {
-              "target": "Package",
-              "version": "[2.2.1, )"
-            },
             "BrotliSharpLib": {
               "target": "Package",
               "version": "[0.3.3, )"
             },
+            "Certes": {
+              "target": "Package",
+              "version": "[3.0.4, )"
+            },
             "Google.Protobuf": {
               "target": "Package",
-              "version": "[3.25.1, )"
+              "version": "[3.25.3, )"
             },
-            "Grpc.Net.Client": {
+            "Grpc.Net.Client.Web": {
               "target": "Package",
-              "version": "[2.59.0, )"
+              "version": "[2.62.0, )"
             },
             "Grpc.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[2.60.0, )"
+              "version": "[2.62.0, )"
             },
             "Microsoft.Extensions.Caching.Abstractions": {
               "target": "Package",
@@ -133,19 +247,23 @@
             },
             "Microsoft.Extensions.Logging": {
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[8.0.0, )"
             },
             "Microsoft.Extensions.Logging.Console": {
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[8.0.0, )"
             },
             "Microsoft.VisualStudio.Validation": {
               "target": "Package",
-              "version": "[17.6.11, )"
+              "version": "[17.8.8, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
+            },
+            "System.CommandLine": {
+              "target": "Package",
+              "version": "[2.0.0-beta4.22272.1, )"
             },
             "System.Runtime": {
               "target": "Package",
@@ -157,7 +275,7 @@
             },
             "System.Security.Cryptography.Pkcs": {
               "target": "Package",
-              "version": "[7.0.3, )"
+              "version": "[8.0.0, )"
             }
           },
           "imports": [
@@ -176,7 +294,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.311/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

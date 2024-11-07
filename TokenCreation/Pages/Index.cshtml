@@ -1,0 +1,21 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Registration";
+}
+
+
+
+<form method="post" asp-page="Index" class="needs-validation">
+    <div class="form-group mb-3">
+        <label class="form-label" asp-for="@Model.registrationToken!.Email">Email</label>
+        <div class="col-md-4">
+            <input class="form-control" autocomplete="off" placeholder="name@example.com" asp-for="@Model.registrationToken!.Email" type="email" pattern="^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@@([A-Za-z0-9]+)(([\.\-‌​]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$" required>
+            <div class="invalid-feedback">
+                Please enter your email in the textarea.
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-lg">Request token</button>
+</form>
+

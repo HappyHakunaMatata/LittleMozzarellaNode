@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Net;
 using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 
 namespace gRPCCertificateSign.Models
 {
     public class Peer
     {
-        public IPEndPoint IP { get; set; }
-        public SslStream State { get; set; }
+        public IPAddress IP { get; set; }
+        public X509Certificate2Collection certificates { get; set; }
 
-        public Peer(IPEndPoint Addr, SslStream ConnectionState)
+        public Peer(IPAddress Addr, X509Certificate2Collection certificates)
         {
             IP = Addr;
-            State = ConnectionState;
+            this.certificates = certificates;
         }
     }
 }

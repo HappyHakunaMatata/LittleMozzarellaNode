@@ -7,15 +7,19 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Node.TunnelExecutors;
 using Node.TunnelExecutors.Models;
+using Org.BouncyCastle.Ocsp;
+using Org.BouncyCastle.Tls;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Node.TunnelManagers
 {
-
-	public class SSLStreamTunnelManager : TunnelManager
+    //TODO: cancellationTokenSource Dispose
+    public class SSLStreamTunnelManager : TunnelManager
     {
         protected readonly ILogger _logger;
+        private readonly X509Certificate2Collection? collection;
 
-        public SSLStreamTunnelManager(string? ip = null, X509Certificate2? certificate = null) : base(ip: ip, certificate: certificate)
+        public SSLStreamTunnelManager(string? ip = null, X509Certificate2? certificate = null, X509Certificate2Collection? collection = null) : base(ip: ip, certificate: certificate)
         {
             using var loggerFactory = LoggerFactory.Create(builder =>
             {
@@ -26,12 +30,13 @@ namespace Node.TunnelManagers
                     .AddConsole();
             });
             _logger = loggerFactory.CreateLogger<TunnelManager>();
+            cancellationTokenSource = new CancellationTokenSource();
+            this.collection = collection;
         }
 
         private CancellationTokenSource cancellationTokenSource;
         internal override void StartAcceptSocket()
         {
-            cancellationTokenSource = new CancellationTokenSource();
             Task task = Task.Run(async () =>
             {
                 await OnAcceptSocketAsync();
@@ -39,6 +44,26 @@ namespace Node.TunnelManagers
             cancellationTokenSource.Token);
             task.Wait();
         }
+
+
+        private SslStreamCertificateContext? BuildSslStreamCertificateContext() {
+            if (this.ServerCertificate != null)
+            {
+                SslCertificateTrust trust = SslCertificateTrust.CreateForX509Collection(this.collection, false);
+                
+                var ssl = SslStreamCertificateContext.Create(this.ServerCertificate, this.collection, offline: true, trust: trust);
+
+                Console.WriteLine($"Lenght: {ssl.IntermediateCertificates.Count}");
+                foreach (var i in this.collection)
+                {
+                    Console.WriteLine(i.Subject);
+                }
+                return ssl;
+            }
+            return null;
+        }
+
+
 
         private async Task OnAcceptSocketAsync()
         {
@@ -56,19 +81,21 @@ namespace Node.TunnelManagers
                     SslStream sslStream = new SslStream(
                         innerStream: new NetworkStream(accept),
                         leaveInnerStreamOpen: false);
-
                     SslServerAuthenticationOptions options = new SslServerAuthenticationOptions()
                     {
+                        //ServerCertificateContext = BuildSslStreamCertificateContext(),
                         ApplicationProtocols = new List<SslApplicationProtocol>
                         {
                             SslApplicationProtocol.Http11,
                         },
                         AllowRenegotiation = false,
                         ServerCertificate = ServerCertificate,
+                        
                         EnabledSslProtocols = SslProtocols.Tls12,
                         ClientCertificateRequired = false,
 
                     };
+                    
                     SSLTunnelExecutor executor = new(_logger);
                     await executor.AuthenticateAsServerAsync(sslStream, options);
                     tunnel.client = accept;
@@ -78,6 +105,7 @@ namespace Node.TunnelManagers
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.InnerException);
                     //await Tunneling.CloseSSLStreamAsync(tunnel.sslClientStream);
                     _logger.LogError($"Request error: {e}");
                 }

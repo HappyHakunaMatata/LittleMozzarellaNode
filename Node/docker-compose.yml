@@ -6,3 +6,10 @@ services:
     build:
       context: .
       dockerfile: Node/Dockerfile
+
+  signedgeservice:
+    image: ${DOCKER_REGISTRY-}signedgeservice
+    build:
+      context: .
+      dockerfile: ../SignEdgeService/Dockerfile
+

@@ -1,143 +1,115 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using Node.Certificate;
-using Node.TunnelManagers;
-using System.Net;
-using Node.Certificate.Models;
-using System.Runtime.InteropServices;
+﻿using Common.Certificate.Models;
 using Node.YggDrasil.cmd;
-using Node.YggDrasil.models;
-using System.Threading.Tasks;
-using System.Runtime.ConstrainedExecution;
-using Org.BouncyCastle.Utilities.Net;
-using Node.Examples;
-using Org.BouncyCastle.Tls;
-using System.Security.Cryptography;
-using System.Collections;
-using System.Net.Sockets;
-using Org.BouncyCastle.Asn1;
-using Org.BouncyCastle.X509;
-using Org.BouncyCastle.Asn1.X509;
-using System.Text;
-using static System.Environment;
-using Node.gRPC;
-using gRPCCertificateSign;
+using System.CommandLine;
 
 namespace Node
 {
+
     class Program
     {
-        static async Task Main()
+
+        static async Task Main(string[] args)
         {
 
-            /*CertificateSettings certificateSettings = new CertificateSettings(Certificate.Models.CertificateType.CA);
-            CertificateAuthorityConfig certificateAuthorityConfig = new CertificateAuthorityConfig();
-            certificateAuthorityConfig.Difficulty = 14;
-            ConcreteSystemSecurityBuilder builder = new ConcreteSystemSecurityBuilder(certificateAuthorityConfig, certificateSettings);
-            CertificateDirector director = new OSXCertificateDirector();
-            var certificate = await director.GenerateFullCertificateAuthority(builder);
-            certificateSettings = new CertificateSettings(Certificate.Models.CertificateType.Identity);
-            builder = new ConcreteSystemSecurityBuilder(certificateSettings);
-            director.CreateIdentity(builder, certificate);
-            */
-            Thread.Sleep(10000);
-            var authorizer = new CertificateAuthorizer(SpecialFolder.UserProfile);
-            var ca = authorizer.LoadFullCAConfig();
-            var ident = authorizer.LoadIdentConfig();
-            var client = new CertificateClient();
-            var res = await client.Sign();
-            Console.WriteLine(res.Count);
+            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "LittleMozzarella/Server");
+            ServiceManager manager = new ServiceManager();
+            manager.Identity = ServiceLocator.Instance.GetIdentityCreation();
+            manager.Yggdrasil = ServiceLocator.Instance.GetYggdrasil();
 
-            /*Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            socket.Bind(new IPEndPoint(System.Net.IPAddress.Parse("127.0.0.1"), 8080));
-            socket.Listen(10);
-            Console.WriteLine("Running");
-            await socket.AcceptAsync();
-            Console.WriteLine("Accepted");
-            */
+            YggdrasilService ygd = new();
+            var t = ygd.GetIPAddress("/Users/user/Desktop/yggdrasil.conf");
+            Console.WriteLine($"{t.Item1},{t.Item2}");
+            t = ygd.GetSnet("/Users/user/Desktop/yggdrasil.conf");
+            Console.WriteLine($"{t.Item1},{t.Item2}");
+            t = ygd.GetPemKey("/Users/user/Desktop/yggdrasil.conf");
+            Console.WriteLine($"{t.Item1},{t.Item2}");
+            t = ygd.GetPrivateKey("/Users/user/Desktop/yggdrasil.conf");
+            Console.WriteLine($"{t.Item1},{t.Item2}");
+            var s = ygd.Version();
+            Console.WriteLine(s);
+            s = ygd.BuildName();
+            Console.WriteLine(s);
+            t = ygd.Genconf(false);
+            Console.WriteLine($"{t.Item1},{t.Item2}");
+            t = ygd.NormaliseConfing("/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/Node/bin/Debug/net8.0/yggdrasil.conf");
+            Console.WriteLine($"{t.Item1},{t.Item2}");
+            t = ygd.SetLogLevel(YggDrasil.models.LogLevels.error);
+            Console.WriteLine($"{t.Item1},{t.Item2}");
+            ygd.Logto(path: "/Users/user/Documents/GitHub/LittleMozzarellaNode/Node/Node/bin/Debug/net8.0/yggdrasil.log");
+            t = ygd.SetLogLevel(YggDrasil.models.LogLevels.error);
+            Console.WriteLine($"{t.Item1},{t.Item2}");
+            var task = Task.Run(() => ygd.RunYggdrasilAsync("/Users/user/Desktop/yggdrasil.conf"));
+            bool r = ygd.ExitYggdrasil();
+            Console.WriteLine(r);
+            task.Wait();
+            Console.WriteLine($"{task.Result.Item1},{task.Result.Item2}");
 
-            /*CertificateSettings certificateSettings = new();
-            ConcreteSystemSecurityBuilder builder = new(certificateSettings);
-            var request = builder.CreateCertificateRequest("CN=localhost", HashAlgorithmName.SHA256);
-            var base_64 = builder.GetBase64(request);
-            CertificateRequestManager manager = new("localhost", base_64);
-            var file = manager.ReadYawl();
-            if (file != null)
+            CertificateSettings settings = new CertificateSettings()
             {
-                manager.CreateRequest(file);
-            }
-            else
-            {
-                Environment.Exit(1);
-            }
-            var client = manager.CreateClient();*/
-            //await manager.Approve(client);
-        }
-
-        static void Main2()
-        {
-            string address = "127.0.0.1";
-            string name = "127.0.0.1";
-            CertificateSettings certificateSettings = new CertificateSettings(Certificate.Models.CertificateType.CA);
-            certificateSettings.Host = address;
-            certificateSettings.RootCertificateName = name;
-            certificateSettings.IssuerName = name;
+                OrganizationName = "LittleMozzarella",
+                IssuerName = "SelfIssued",
+                Difficulty = 36,
+            };
+            settings.SetIPAdress("127.0.0.1");
 
 
-            CertificateDirector? certificateDirector = null;
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            RootCommand root = new RootCommand();
+
+            var CreateCommand = new Command(
+            name: "Create",
+            description: "Create a new full identity for a service");
+
+            var CancelCommand = new Command(
+            name: "Cancel",
+            description: "Cancel creation identity for a service");
+
+            root.AddCommand(CreateCommand);
+            root.AddCommand(CancelCommand);
+
+
+            CreateCommand.SetHandler(async () =>
             {
-                certificateDirector = new OSXCertificateDirector();
-            }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                await manager.CreateFullCertificateAuthority(path, settings);
+            });
+            CancelCommand.SetHandler(manager.CancelCreation);
+            
+
+
+            if (args.Length > 0)
             {
-                certificateDirector = new WinCertificateDirector(certificateSettings);
-            }
-            if (certificateDirector == null)
-            {
+                root.Invoke(args);
                 return;
             }
-
-
-            using YggdrasilTest client = new YggdrasilTest();
-            client.Useconffile();
-            var task = Task.Run(async () => await client.RunYggdrasilAsync());
-            /*var ip = client.GetIPAddress();
-            if (ip.Item1 == 0)
-            {
-                address = ip.Item2;
-            }*/
-
-           
-            X509Certificate2Collection collection = certificateDirector.FindCertificates($"CN={name}");
-            var value = collection.FirstOrDefault();
-            if (value != null)
-            {
-                certificateDirector.RootCertificate = value;
-            }
-            else
-            {
-                ConcreteBouncyCastleCertificateBuilder builder = new(certificateSettings);
-                //certificateDirector.GenerateCertificate(builder);
-                certificateDirector.RootCertificate = builder.GetCertificate();
-                certificateDirector.TrustRootCertificateAsAdmin();
-                collection = certificateDirector.FindCertificates($"CN={name}");
-                value = collection.FirstOrDefault();
-            }
-            if (task.IsCompleted)
-            {
-                Console.WriteLine($"Yggdrasil error: {task.Result.Item1}\n Yggdrasil message: {task.Result.Item2}");
-            }
-
-
-
-            SSLStreamTunnelManager tunnel = new(certificate: value, ip: "127.0.0.1"); //address 172.20.10.7
-            tunnel.ListeningAddress = System.Net.IPAddress.Parse("127.0.0.1");
-
-            Task.Run(() => tunnel.OpenSocketAsync());
-            Example example = new();
-            example.StartSSLClientExample();
-            //MainYggdrasil.Exit();
+            StartReadConsole(root);
         }
 
+        public static void StartReadConsole(RootCommand root)
+        {
+            try
+            {
+                while (true)
+                {
+                    var arguments = Console.ReadLine();
+                    if (string.IsNullOrEmpty(arguments))
+                    {
+                        break;
+                    }
+                    var args = arguments.Split(" ");
+                    if (args.First() == "Create")
+                    {
+                        root.InvokeAsync(args);
+                    }
+                    else
+                    {
+                        root.Invoke(args);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+
+            }
+        }
     }
 }

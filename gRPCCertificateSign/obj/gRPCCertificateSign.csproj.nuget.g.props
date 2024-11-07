@@ -13,9 +13,14 @@
     <SourceRoot Include="/Users/user/.nuget/packages/" />
   </ItemGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Import Project="$(NuGetPackageRoot)grpc.tools/2.49.0/build/Grpc.Tools.props" Condition="Exists('$(NuGetPackageRoot)grpc.tools/2.49.0/build/Grpc.Tools.props')" />
+    <Import Project="$(NuGetPackageRoot)grpc.tools/2.60.0/build/Grpc.Tools.props" Condition="Exists('$(NuGetPackageRoot)grpc.tools/2.60.0/build/Grpc.Tools.props')" />
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <PkgGrpc_Tools Condition=" '$(PkgGrpc_Tools)' == '' ">/Users/user/.nuget/packages/grpc.tools/2.49.0</PkgGrpc_Tools>
+    <PkgGrpc_Tools Condition=" '$(PkgGrpc_Tools)' == '' ">/Users/user/.nuget/packages/grpc.tools/2.60.0</PkgGrpc_Tools>
+    <PkgAWSSDK_Core Condition=" '$(PkgAWSSDK_Core)' == '' ">/Users/user/.nuget/packages/awssdk.core/3.7.302.12</PkgAWSSDK_Core>
+    <PkgAWSSDK_KeyManagementService Condition=" '$(PkgAWSSDK_KeyManagementService)' == '' ">/Users/user/.nuget/packages/awssdk.keymanagementservice/3.7.300.52</PkgAWSSDK_KeyManagementService>
+    <PkgAWSSDK_IoT Condition=" '$(PkgAWSSDK_IoT)' == '' ">/Users/user/.nuget/packages/awssdk.iot/3.7.306.4</PkgAWSSDK_IoT>
+    <PkgAWSSDK_CertificateManager Condition=" '$(PkgAWSSDK_CertificateManager)' == '' ">/Users/user/.nuget/packages/awssdk.certificatemanager/3.7.300.52</PkgAWSSDK_CertificateManager>
+    <PkgAWSSDK_ACMPCA Condition=" '$(PkgAWSSDK_ACMPCA)' == '' ">/Users/user/.nuget/packages/awssdk.acmpca/3.7.301.11</PkgAWSSDK_ACMPCA>
   </PropertyGroup>
 </Project>

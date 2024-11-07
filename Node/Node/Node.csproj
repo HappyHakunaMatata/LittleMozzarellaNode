@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -27,53 +27,45 @@
     <None Remove="YggDrasil\CMD\yggdrasil\" />
     <None Remove="YggDrasil\CMD\yggdrasilctl\" />
     <None Remove="YggDrasil\CMD\genkeys\" />
-    <None Remove="Certificate\" />
-    <None Remove="Controllers\" />
-    <None Remove="Examples\" />
     <None Remove="TunnelManagers\" />
     <None Remove="TunnelExecutors\" />
-    <None Remove="Certificate\Models\" />
     <None Remove="YggDrasil\models\" />
-    <None Remove="Certificate\Math\" />
-    <None Remove="Certificate\Delegates\" />
-    <None Remove="Certificate\CertificateTemplate\" />
     <None Remove="gRPC\" />
     <None Remove="Protos\" />
+    <None Remove="Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BrotliSharpLib" Version="0.3.3" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
     <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
     <PackageReference Include="System.Runtime" Version="4.3.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Validation" Version="17.6.11" />
-    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="7.0.3" />
-    <PackageReference Include="BouncyCastle.Cryptography" Version="2.2.1" />
-    <PackageReference Include="Grpc.Net.Client" Version="2.59.0" />
-    <PackageReference Include="Grpc.Tools" Version="2.60.0">
+    <PackageReference Include="Microsoft.VisualStudio.Validation" Version="17.8.8" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="8.0.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.62.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Google.Protobuf" Version="3.25.1" />
+    <PackageReference Include="Google.Protobuf" Version="3.25.3" />
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Grpc.Net.Client.Web" Version="2.62.0" />
+    <PackageReference Include="Certes" Version="3.0.4" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="YggDrasil\" />
-    <Folder Include="Certificate\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Examples\" />
     <Folder Include="TunnelManagers\" />
     <Folder Include="TunnelExecutors\" />
-    <Folder Include="Certificate\Models\" />
     <Folder Include="YggDrasil\models\" />
-    <Folder Include="Certificate\Math\" />
-    <Folder Include="Certificate\Delegates\" />
-    <Folder Include="Certificate\CertificateTemplate\" />
     <Folder Include="gRPC\" />
     <Folder Include="Protos\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <Protobuf Include="Protos\certificate.proto" GrpcServices="Client" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.csproj" />
   </ItemGroup>
 </Project>
